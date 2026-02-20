@@ -845,3 +845,271 @@ body:has(#modal-break:target)   #screen-admin     { display: flex; }
 .break-opt-btn.default {
   border-color: var(--orange); background: #FFF5E0; color: var(--orange);
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PATIENT DIAGNOSIS FORM
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Disclaimer Notice */
+.diagnosis-notice {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: #FFF5E0; border-radius: var(--radius-sm); padding: 12px 14px;
+  border: 1px solid rgba(255,149,0,.2);
+  font-size: 13px; color: var(--text-b); line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.diagnosis-notice svg {
+  width: 18px; height: 18px; flex-shrink: 0;
+  color: var(--orange); margin-top: 2px;
+}
+
+/* Section Structure */
+.diagnosis-section {
+  display: flex; flex-direction: column; gap: 14px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+
+.diagnosis-section:last-child {
+  border-bottom: none;
+}
+
+.diagnosis-section-title {
+  font-size: 15px; font-weight: 700; color: var(--text-h);
+  margin: 0; line-height: 1.3;
+}
+
+.diagnosis-section-sub {
+  font-size: 13px; color: var(--text-m); margin: -6px 0 0 0;
+}
+
+/* Symptom Buttons (Chief Complaint) */
+.symptom-buttons {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.symptom-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 14px 12px; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: all .15s; font-size: 13px; font-weight: 500; color: var(--text-b);
+  text-align: center; text-decoration: none;
+}
+
+.symptom-btn:active {
+  transform: scale(.95);
+}
+
+input[type="radio"]:checked + .symptom-btn,
+#symptom-respiratory:checked ~ .symptom-buttons .symptom-btn[for="symptom-respiratory"],
+#symptom-gi:checked ~ .symptom-buttons .symptom-btn[for="symptom-gi"] {
+  background: var(--blue-lt); border-color: var(--blue); color: var(--blue);
+}
+
+/* Direct selector for checked radio buttons */
+#symptom-respiratory:checked + .symptom-btn,
+#symptom-gi:checked + .symptom-btn,
+#symptom-pain:checked + .symptom-btn,
+#symptom-fever:checked + .symptom-btn,
+#symptom-skin:checked + .symptom-btn,
+#symptom-headache:checked + .symptom-btn,
+#symptom-other:checked + .symptom-btn {
+  background: var(--blue-lt); border-color: var(--blue); color: var(--blue);
+}
+
+.symptom-btn svg {
+  width: 24px; height: 24px;
+}
+
+/* Radio Options (Duration & Custom) */
+.radio-options {
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.radio-option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; position: relative;
+}
+
+.radio-option:active {
+  transform: scale(.98);
+}
+
+.radio-custom {
+  width: 20px; height: 20px; border: 2px solid var(--border);
+  border-radius: 50%; flex-shrink: 0; position: relative;
+  transition: all .15s;
+}
+
+.radio-label {
+  font-size: 14px; color: var(--text-b); flex: 1;
+}
+
+input[type="radio"]:checked + .radio-custom {
+  border-color: var(--blue); background: var(--blue);
+}
+
+input[type="radio"]:checked + .radio-custom::after {
+  content: ''; position: absolute;
+  width: 6px; height: 10px; border: solid white;
+  border-width: 0 2px 2px 0; transform: rotate(45deg);
+  top: 50%; left: 50%; margin: -5px 0 0 -3px;
+}
+
+input[type="radio"]:checked ~ .radio-option:nth-of-type(1) .radio-custom,
+input[type="radio"]:checked ~ .radio-label {
+  border-color: var(--blue);
+}
+
+input[type="radio"]:checked ~ .radio-option {
+  background: #EEF3FF; border-color: var(--blue);
+}
+
+/* Severity Scale */
+.severity-scale {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.severity-option {
+  cursor: pointer;
+}
+
+.severity-badge {
+  display: block; padding: 14px 12px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  text-align: center; font-size: 14px; font-weight: 600;
+  color: var(--text-b); transition: all .15s;
+}
+
+#severity-mild:checked,
+#severity-moderate:checked,
+#severity-severe:checked {
+  & ~ .severity-scale .severity-badge {
+    background: var(--surface); border-color: var(--border);
+  }
+}
+
+input[type="radio"][name="severity"]:checked + .severity-badge {
+  background: var(--blue-lt); border-color: var(--blue); color: var(--blue);
+}
+
+.diagnosis-hint {
+  font-size: 12px; color: var(--text-m); margin-top: -4px;
+}
+
+/* Checkbox Options */
+.checkbox-options {
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.checkbox-option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; position: relative;
+}
+
+.checkbox-option:active {
+  transform: scale(.98);
+}
+
+.checkbox-custom {
+  width: 20px; height: 20px; border: 2px solid var(--border);
+  border-radius: 8px; flex-shrink: 0; position: relative;
+  transition: all .15s;
+}
+
+.checkbox-label {
+  font-size: 14px; color: var(--text-b); flex: 1;
+}
+
+input[type="checkbox"]:checked + span.checkbox-custom {
+  border-color: var(--blue); background: var(--blue);
+}
+
+input[type="checkbox"]:checked + span.checkbox-custom::after {
+  content: '✓'; position: absolute;
+  color: white; font-size: 14px; font-weight: 700;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+/* Text Fields (Allergies, Medications) */
+.text-field-group {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 12px;
+}
+
+.text-field-label {
+  font-size: 13px; font-weight: 600; color: var(--text-m);
+  letter-spacing: .3px;
+}
+
+.text-field {
+  padding: 12px 14px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); background: var(--surface);
+  font-size: 14px; color: var(--text-h); font-family: var(--font);
+  outline: none; transition: border-color .15s;
+}
+
+.text-field:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26,107,255,.12);
+}
+
+.text-field::placeholder {
+  color: var(--text-lt);
+}
+
+/* Responsive adjustments */
+@media (min-width: 900px) {
+  .diagnosis-section {
+    gap: 16px;
+  }
+
+  .symptom-buttons {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .severity-scale {
+    gap: 12px;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DIAGNOSIS CONFIRMATION (Dashboard)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.diagnosis-card {
+  background: #F0FFF4; border: 1px solid rgba(52,199,89,.2);
+  border-radius: var(--radius-md); padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.diagnosis-card.alert-success {
+  background: #F0FFF4; border-color: rgba(52,199,89,.3);
+}
+
+.diagnosis-card-top {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 8px;
+}
+
+.diagnosis-status-icon {
+  width: 32px; height: 32px;
+  background: rgba(52,199,89,.15); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #34C759; flex-shrink: 0;
+}
+
+.diagnosis-status-text {
+  font-size: 15px; font-weight: 600; color: #28A745;
+}
+
+.diagnosis-summary {
+  font-size: 13px; color: var(--text-m); line-height: 1.5; margin: 0;
+}

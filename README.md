@@ -25,6 +25,67 @@
     * **Logout:** Deletes the token.  
   * *Biometrics:* If available (FaceID/Fingerprint), use it as a local shortcut to decrypt the token, but do not require OTP again unless the user explicitly logs out.
 
+## **2.5: Quick Diagnostic Assessment**
+
+* **Philosophy:** Safe, evidence-based symptom triage without medical diagnosis.
+* **Purpose:** Collect structured health information to intelligently assign patients to appropriate doctors.
+* **Flow:** Patient completes assessment → System assigns patient to best-matched doctor → Patient enters queue.
+
+### **Assessment Components**
+
+1. **Chief Complaint (Primary Symptom)**
+   - **Options:** Cough/Cold, Nausea/Vomiting, Pain/Injury, Fever, Skin Issues, Headache, Other
+   - **Benefit:** Determines doctor specialty assignment
+   - **Safety:** Simple categorical selection—no free-text diagnosis
+
+2. **Symptom Duration**
+   - **Options:** <24hrs (Acute) | 1-3 days (Recent) | 4-7 days (Subacute) | >1 week (Chronic)
+   - **Purpose:** Helps assess urgency and severity
+
+3. **Severity Self-Assessment**
+   - **Scale:** Mild, Moderate, Severe
+   - **Impact:** Severe cases get priority queue positioning
+   - **Localized:** Patient rates their own condition—no clinical judgment
+
+4. **Associated Symptoms (Checklist)**
+   - **Options:** Fever/Chills, Fatigue, Loss of appetite, Sleep disturbance
+   - **Safety:** Non-diagnostic—just supportive information
+   - **Data Usage:** Feeds doctor notes; helps identify patterns
+
+5. **Medical History (Safe Questions)**
+   - **Text Fields:** Known Allergies, Current Medications
+   - **Checkboxes:** Diabetes, Hypertension, Previous similar episodes
+   - **Safety Principle:** Only asks about conditions that affect immediate treatment decisions
+   - **Privacy:** No genetic data, no detailed psychiatric history, no socioeconomic questions
+
+6. **Legal Disclaimer**
+   - "This assessment is for triage only and does not replace a medical diagnosis."
+   - **Compliance:** Meets WHO & healthcare law requirements for non-diagnostic triage tools
+
+### **Doctor Assignment Logic (Load Balanced)**
+
+| Chief Complaint | Preferred Doctor | Fallback |
+|---|---|---|
+| Respiratory (cough, cold) | General Practitioner | Any |
+| GI (nausea, vomiting) | GI Specialist / GP | Any |
+| Pain / Musculoskeletal | Orthopedic / GP | Any |
+| Fever | Infection Specialist / GP | Any |
+| Skin Issues | Dermatologist / GP | Any |
+| Headache | Neurologist / GP | Any |
+| Other / Unspecified | General Practitioner | Any |
+
+**Final Assignment:**
+- Primary: Match to specialty (if available)
+- Tiebreaker: Assign to doctor with **fewest patients in queue** (load balancing)
+- Result: Patient sees " XX people ahead of you. Dr. [Name] is your assigned doctor."
+
+### **Data Security & Privacy**
+
+- **Stored Safely:** Encrypted in patient record (HIPAA/GDPR compliant backend required)
+- **Never Sold:** Assessment data is never shared with third parties
+- **Doctor-Visible:** Only the patient's assigned doctor sees the full assessment
+- **Audit Trail:** All assessments logged with timestamp for accountability
+
 ## **3\. Wireframe Flow 1: The Patient Journey**
 
 * **Screen 1.2: The "Safety Gate" (Scope Cut)**  
@@ -116,6 +177,7 @@ clinic-flow/
 
 #### **Patient Journey (§3)**
 - **Screen 1.1:** Patient Dashboard (home with queue status)
+- **Screen 1.0:** Quick Diagnostic Assessment (triage questionnaire)
 - **Screen 1.2:** Emergency Hotline (🏥 Call 999)
 - **Screen 1.6:** Queue Display (Load-balanced by count)
 - **Screen 2.1:** Running Late Modal (Swap with next)
