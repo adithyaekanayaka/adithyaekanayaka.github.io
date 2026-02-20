@@ -79,8 +79,21 @@
 ### **Technology Stack**
 - **Frontend:** Pure HTML5 + CSS3 (Figma-style prototype)
 - **Navigation:** CSS `:target` pseudo-selector for screen routing (no JavaScript)
-- **Responsive Design:** Mobile-first approach with viewport-fit=cover for notch support
-- **Browser Compatibility:** Modern browsers supporting CSS Grid, Flexbox, and advanced selectors
+- **Responsive Design:** Fully responsive across all devices (mobile → ultra-wide displays)
+- **Browser Compatibility:** Modern browsers supporting CSS Grid, Flexbox, CSS variables, and advanced selectors
+
+### **Responsive Breakpoints & Design**
+- **Mobile (< 600px):** Full-screen mobile experience with safe-area awareness for notches
+- **Tablets (600px+):** Centered card layout (480px width) with gradient backdrop
+- **Large Tablets (900px+):** Slightly wider card (520px) for better content readability
+- **Desktop (1400px+):** Optimized width (560px) maintaining perfect proportions
+
+### **Desktop Enhancements**
+- **Rich Background:** Layered radial gradients create visual depth instead of plain blue
+- **Backdrop Patterns:** Multiple overlapping light gradients for sophisticated, engaging look
+- **Enhanced Shadows:** Premium-quality dual-layer shadows for superior depth perception
+- **Responsive Typography:** Fluid text scaling using CSS `clamp()` for smooth transitions
+- **Adaptive Spacing:** Components intelligently scale their padding and gaps across breakpoints
 
 ### **File Structure**
 ```
@@ -148,15 +161,16 @@ The prototype uses CSS `:target` for navigation—clicking links with `href="#sc
 
 ### **Key Features**
 
-✅ Responsive mobile design (works on all screen sizes)
+✅ **Fully responsive design** (mobile, tablet, desktop, ultra-wide displays)
+✅ **Desktop-optimized experience** with engaging gradient backgrounds
 ✅ Touch-friendly button sizes (min 44px)
 ✅ Icon-based navigation (accessible SVG icons)
 ✅ Modal dialogs for confirmations
 ✅ Bottom tab navigation
-✅ Emergency call button
-✅ Queue status display (count-based, not time-based)
-✅ Static map placeholder
-✅ Triage queue management interface
+✅ Fluid typography scaling with CSS `clamp()`
+✅ Intelligent adaptive spacing across all breakpoints
+✅ Premium shadow effects for depth perception
+✅ Safe-area awareness for notch devices
 
 ### **Future Enhancements (Post-MVP)**
 
