@@ -9,7 +9,7 @@
 <body>
 
   <!-- ─────────────────────────────────────────
-       SCREEN 0.1 · SPLASH  (default screen)
+       SCREEN 0.1 · SPLASH
   ───────────────────────────────────────── -->
   <div class="screen" id="screen-splash">
     <div class="splash-bg"></div>
@@ -24,7 +24,11 @@
       <h1 class="splash-title">Clinic Flow</h1>
       <p class="splash-sub">Smart Queue Management</p>
     </div>
-    <a class="splash-cta" href="#screen-role">Get Started</a>
+    
+    <div class="splash-footer">
+      <a class="btn-primary-white" href="#screen-role">Get Started</a>
+      <a class="btn-link-white" href="#screen-dashboard">Returning User? (Skip)</a>
+    </div>
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -47,7 +51,7 @@
       <p class="screen-sub">Select your role to continue</p>
 
       <div class="role-cards">
-        <a class="role-card" href="#screen-phone" data-role="patient">
+        <a class="role-card" href="#screen-phone-patient">
           <div class="role-icon role-icon--patient">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="10" r="5" stroke="currentColor" stroke-width="2"/>
@@ -58,14 +62,10 @@
             <span class="role-name">Patient</span>
             <span class="role-desc">Book &amp; manage your queue</span>
           </div>
-          <div class="role-arrow">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+          <div class="role-arrow"><svg width="20" height="20"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
         </a>
 
-        <a class="role-card" href="#screen-phone" data-role="staff">
+        <a class="role-card" href="#screen-phone-staff">
           <div class="role-icon role-icon--staff">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
               <rect x="8" y="6" width="16" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
@@ -76,144 +76,132 @@
             <span class="role-name">Staff</span>
             <span class="role-desc">Manage clinic operations</span>
           </div>
-          <div class="role-arrow">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+          <div class="role-arrow"><svg width="20" height="20"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
         </a>
 
-        <a class="role-card" href="#screen-phone" data-role="admin">
+        <a class="role-card" href="#screen-phone-admin">
           <div class="role-icon role-icon--admin">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M16 4l3.09 6.26L26 11.27l-5 4.87 1.18 6.86L16 20l-6.18 3-1-6.86L4 11.27l6.91-1.01L16 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+              <path d="M11 11l10 10M21 11l-10 10" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
           <div class="role-text">
             <span class="role-name">Admin</span>
             <span class="role-desc">Dashboard &amp; oversight</span>
           </div>
-          <div class="role-arrow">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+          <div class="role-arrow"><svg width="20" height="20"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
         </a>
       </div>
     </div>
   </div>
 
   <!-- ─────────────────────────────────────────
-       SCREEN 0.3a · PHONE NUMBER ENTRY
+       SCREEN 0.3 · REGISTRATION (Patient Path)
   ───────────────────────────────────────── -->
-  <div class="screen" id="screen-phone">
+  <div class="screen" id="screen-phone-patient">
     <div class="screen-header with-back">
       <a class="btn-back" href="#screen-role">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="header-step">Step 1 of 2</div>
     </div>
-
     <div class="screen-body">
-      <div class="section-label" id="phone-role-label">Patient</div>
+      <div class="section-label">Patient</div>
       <h2 class="screen-title">Enter your phone number</h2>
-      <p class="screen-sub">We'll send a one-time code to verify your identity.</p>
-
+      <p class="screen-sub">Securely bind your device with OTP.</p>
       <div class="form-group">
-        <label class="form-label">Phone Number</label>
         <div class="phone-input-row">
-          <button class="country-picker">
-            <span class="flag">🇲🇾</span>
-            <span class="dial-code">+60</span>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <input
-            class="phone-input"
-            id="phone-input"
-            type="tel"
-            placeholder="12-345 6789"
-            inputmode="numeric"
-            maxlength="11"
-          />
+          <div class="country-picker">🇲🇾 +60</div>
+          <input class="phone-input" type="tel" placeholder="12-345 6789">
         </div>
       </div>
-
       <div class="info-note">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="7" stroke="#1A6BFF" stroke-width="1.5"/>
-          <path d="M8 7v5M8 5v.5" stroke="#1A6BFF" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v5M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span>Standard SMS rates may apply.</span>
       </div>
     </div>
+    <div class="screen-footer"><a class="btn-primary" href="#screen-otp-patient">Send Code</a></div>
+  </div>
 
-    <div class="screen-footer">
-      <a class="btn-primary" href="#screen-otp">
-        Send Code
-      </a>
+  <div class="screen" id="screen-otp-patient">
+    <div class="screen-header with-back">
+      <a class="btn-back" href="#screen-phone-patient"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="header-step">Step 2 of 2</div>
     </div>
+    <div class="screen-body">
+      <div class="otp-icon"><svg width="56" height="56" fill="none"><rect width="56" height="56" rx="16" fill="#EEF3FF"/><path d="M18 28h20" stroke="#1A6BFF" stroke-width="2"/></svg></div>
+      <h2 class="screen-title">Verify your number</h2>
+      <p class="screen-sub">Enter the 6-digit code sent to your phone.</p>
+      <div class="otp-inputs">
+        <input class="otp-box" type="text" maxlength="1" value="4">
+        <input class="otp-box" type="text" maxlength="1" value="7">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+      </div>
+      <div class="biometric-row">
+        <a class="btn-biometric" href="#screen-dashboard">🛡️ Use Face ID</a>
+      </div>
+    </div>
+    <div class="screen-footer"><a class="btn-primary" href="#screen-dashboard">Verify &amp; Continue</a></div>
   </div>
 
   <!-- ─────────────────────────────────────────
-       SCREEN 0.3b · OTP VERIFICATION
+       SCREEN 0.3 · REGISTRATION (Staff/Admin Path)
   ───────────────────────────────────────── -->
-  <div class="screen" id="screen-otp">
+  <div class="screen" id="screen-phone-staff">
     <div class="screen-header with-back">
-      <a class="btn-back" href="#screen-phone">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <div class="header-step">Step 2 of 2</div>
+      <a class="btn-back" href="#screen-role"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="header-step">Credential Bind</div>
     </div>
-
     <div class="screen-body">
-      <div class="otp-icon">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-          <rect width="56" height="56" rx="16" fill="#EEF3FF"/>
-          <path d="M18 28l28 0M18 28l-6 2v-4l6 2zM46 28l6-2v4l-6-2z" stroke="#1A6BFF" stroke-width="2" stroke-linecap="round"/>
-          <rect x="22" y="20" width="12" height="16" rx="2" fill="#1A6BFF" fill-opacity="0.15" stroke="#1A6BFF" stroke-width="1.5"/>
-          <path d="M26 24h4M26 28h2" stroke="#1A6BFF" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <h2 class="screen-title">Verify your number</h2>
-      <p class="screen-sub">Enter the 6-digit code sent to <span id="otp-phone-display" class="highlight">+60 12-345 6789</span></p>
-
-      <div class="otp-inputs" id="otp-inputs">
-        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
-        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
-        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
-        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
-        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
-        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
-      </div>
-
-      <div class="otp-resend">
-        <button class="btn-link">Resend Code</button>
-      </div>
-
-      <div id="biometric-option" class="biometric-row">
-        <button class="btn-biometric">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" stroke="#1A6BFF" stroke-width="1.5"/>
-            <circle cx="12" cy="12" r="4" stroke="#1A6BFF" stroke-width="1.5"/>
-            <circle cx="12" cy="12" r="1.5" fill="#1A6BFF"/>
-          </svg>
-          Use Face ID instead
-        </button>
+      <div class="section-label">Staff Member</div>
+      <h2 class="screen-title">Enter staff mobile</h2>
+      <p class="screen-sub">This device will be bound to your medical ID.</p>
+      <div class="form-group">
+        <div class="phone-input-row">
+          <div class="country-picker">🇲🇾 +60</div>
+          <input class="phone-input" type="tel" placeholder="Staff Number">
+        </div>
       </div>
     </div>
+    <div class="screen-footer"><a class="btn-primary" href="#screen-otp-staff">Send Staff OTP</a></div>
+  </div>
 
-    <div class="screen-footer">
-      <a class="btn-primary" href="#screen-dashboard">
-        Verify &amp; Continue
-      </a>
+  <div class="screen" id="screen-otp-staff">
+    <div class="screen-header with-back">
+      <a class="btn-back" href="#screen-phone-staff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="screen-body center-v">
+      <h2 class="screen-title">Verification</h2>
+      <p class="screen-sub">OTP sent for Staff binding.</p>
+      <div class="otp-inputs">
+        <input class="otp-box" type="text" maxlength="1" value="1">
+        <input class="otp-box" type="text" maxlength="1" value="1">
+        <input class="otp-box" type="text" maxlength="1" value="1">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+      </div>
+      <a class="btn-primary" href="#screen-admin">Verify Staff Account</a>
     </div>
   </div>
+
+  <div class="screen" id="screen-phone-admin">
+    <div class="screen-header with-back text-center">
+      <a class="btn-back" href="#screen-role"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="screen-body center-v">
+      <div class="section-label">Admin Access</div>
+      <h2 class="screen-title">Administrator Login</h2>
+      <p class="screen-sub">Enter bound phone number for supervisor access.</p>
+      <div class="form-group"><div class="phone-input-row"><div class="country-picker">🔒</div><input class="phone-input" type="password" placeholder="Admin PIN" value="••••••"></div></div>
+      <a class="btn-primary" href="#screen-admin">Enter Dashboard</a>
+    </div>
+  </div>
+
 
   <!-- ─────────────────────────────────────────
        SCREEN 1.1 · DASHBOARD (Patient)

@@ -152,17 +152,24 @@ body:has(#modal-break:target)   #screen-admin     { display: flex; }
 .splash-title { font-size: 32px; font-weight: 700; letter-spacing: -.5px; color: white; }
 .splash-sub   { font-size: 15px; color: rgba(255,255,255,.7); letter-spacing: .2px; }
 
-.splash-cta {
-  position: absolute; bottom: 60px;
+.splash-footer {
+  position: absolute; bottom: 52px;
   width: calc(100% - 48px); max-width: 432px;
-  padding: 17px; z-index: 1;
-  background: white; color: var(--blue);
-  font-size: 16px; font-weight: 700;
-  border: none; border-radius: var(--radius-sm);
-  text-decoration: none; text-align: center;
-  letter-spacing: .2px;
+  display: flex; flex-direction: column; gap: 12px; z-index: 1;
 }
-.splash-cta:active { opacity: .9; transform: scale(.98); }
+
+.btn-primary-white {
+  padding: 17px; background: white; color: var(--blue);
+  font-size: 16px; font-weight: 700; border-radius: var(--radius-sm);
+  text-decoration: none; text-align: center; letter-spacing: .2px;
+}
+.btn-primary-white:active { transform: scale(.98); background: #f0f0f0; }
+
+.btn-link-white {
+  font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8);
+  text-decoration: none; text-align: center; padding: 8px;
+}
+.btn-link-white:active { color: white; }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    SHARED HEADER
