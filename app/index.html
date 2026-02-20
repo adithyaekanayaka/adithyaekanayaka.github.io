@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.1 · SPLASH
+  ───────────────────────────────────────── -->
+  <div class="screen active" id="screen-splash">
+    <div class="splash-bg"></div>
+    <div class="splash-content">
+      <div class="splash-logo">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+          <rect width="72" height="72" rx="18" fill="white" fill-opacity="0.15"/>
+          <path d="M36 18v36M18 36h36" stroke="white" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="36" cy="36" r="22" stroke="white" stroke-width="3" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <h1 class="splash-title">Clinic Flow</h1>
+      <p class="splash-sub">Smart Queue Management</p>
+    </div>
+    <div class="splash-loader">
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.2 · ROLE SELECTION
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-role">
+    <div class="screen-header">
+      <div class="header-logo-small">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="7" fill="#1A6BFF"/>
+          <path d="M14 6v16M6 14h16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span>Clinic Flow</span>
+      </div>
+    </div>
+
+    <div class="screen-body center-v">
+      <div class="section-label">Welcome</div>
+      <h2 class="screen-title">Who are you?</h2>
+      <p class="screen-sub">Select your role to continue</p>
+
+      <div class="role-cards">
+        <button class="role-card" onclick="selectRole('patient')" data-role="patient">
+          <div class="role-icon role-icon--patient">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="10" r="5" stroke="currentColor" stroke-width="2"/>
+              <path d="M6 26c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="role-text">
+            <span class="role-name">Patient</span>
+            <span class="role-desc">Book &amp; manage your queue</span>
+          </div>
+          <div class="role-arrow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+
+        <button class="role-card" onclick="selectRole('staff')" data-role="staff">
+          <div class="role-icon role-icon--staff">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="8" y="6" width="16" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 11h8M12 15h8M12 19h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="role-text">
+            <span class="role-name">Staff</span>
+            <span class="role-desc">Manage clinic operations</span>
+          </div>
+          <div class="role-arrow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+
+        <button class="role-card" onclick="selectRole('admin')" data-role="admin">
+          <div class="role-icon role-icon--admin">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4l3.09 6.26L26 11.27l-5 4.87 1.18 6.86L16 20l-6.18 3-1-6.86L4 11.27l6.91-1.01L16 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="role-text">
+            <span class="role-name">Admin</span>
+            <span class="role-desc">Dashboard &amp; oversight</span>
+          </div>
+          <div class="role-arrow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.3a · PHONE NUMBER ENTRY
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-phone">
+    <div class="screen-header with-back">
+      <button class="btn-back" onclick="goBack()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="header-step">Step 1 of 2</div>
+    </div>
+
+    <div class="screen-body">
+      <div class="section-label" id="phone-role-label">Patient</div>
+      <h2 class="screen-title">Enter your phone number</h2>
+      <p class="screen-sub">We'll send a one-time code to verify your identity.</p>
+
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <div class="phone-input-row">
+          <button class="country-picker" onclick="showCountryPicker()">
+            <span class="flag">🇲🇾</span>
+            <span class="dial-code">+60</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <input
+            class="phone-input"
+            id="phone-input"
+            type="tel"
+            placeholder="12-345 6789"
+            inputmode="numeric"
+            maxlength="11"
+            oninput="handlePhoneInput(this)"
+          />
+        </div>
+      </div>
+
+      <div class="info-note">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="7" stroke="#1A6BFF" stroke-width="1.5"/>
+          <path d="M8 7v5M8 5v.5" stroke="#1A6BFF" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Standard SMS rates may apply.</span>
+      </div>
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn-primary" id="btn-send-otp" disabled onclick="sendOTP()">
+        Send Code
+      </button>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.3b · OTP VERIFICATION
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-otp">
+    <div class="screen-header with-back">
+      <button class="btn-back" onclick="goBack()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="header-step">Step 2 of 2</div>
+    </div>
+
+    <div class="screen-body">
+      <div class="otp-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect width="56" height="56" rx="16" fill="#EEF3FF"/>
+          <path d="M18 28l28 0M18 28l-6 2v-4l6 2zM46 28l6-2v4l-6-2z" stroke="#1A6BFF" stroke-width="2" stroke-linecap="round"/>
+          <rect x="22" y="20" width="12" height="16" rx="2" fill="#1A6BFF" fill-opacity="0.15" stroke="#1A6BFF" stroke-width="1.5"/>
+          <path d="M26 24h4M26 28h2" stroke="#1A6BFF" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="screen-title">Verify your number</h2>
+      <p class="screen-sub">Enter the 6-digit code sent to <span id="otp-phone-display" class="highlight">+60 12-345 6789</span></p>
+
+      <div class="otp-inputs" id="otp-inputs">
+        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" oninput="otpInput(this, 0)" onkeydown="otpKeydown(this, 0)" />
+        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" oninput="otpInput(this, 1)" onkeydown="otpKeydown(this, 1)" />
+        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" oninput="otpInput(this, 2)" onkeydown="otpKeydown(this, 2)" />
+        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" oninput="otpInput(this, 3)" onkeydown="otpKeydown(this, 3)" />
+        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" oninput="otpInput(this, 4)" onkeydown="otpKeydown(this, 4)" />
+        <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" oninput="otpInput(this, 5)" onkeydown="otpKeydown(this, 5)" />
+      </div>
+
+      <div class="otp-resend">
+        <span id="resend-timer" class="timer-text">Resend code in <b id="resend-countdown">30</b>s</span>
+        <button id="btn-resend" class="btn-link hidden" onclick="resendOTP()">Resend Code</button>
+      </div>
+
+      <div id="biometric-option" class="biometric-row hidden">
+        <button class="btn-biometric" onclick="verifyBiometric()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" stroke="#1A6BFF" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="4" stroke="#1A6BFF" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="1.5" fill="#1A6BFF"/>
+          </svg>
+          Use Face ID instead
+        </button>
+      </div>
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn-primary" id="btn-verify" disabled onclick="verifyOTP()">
+        Verify &amp; Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 1.1 · DASHBOARD (Patient)
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-dashboard">
+    <div class="dashboard-header">
+      <div class="dashboard-greeting">
+        <div>
+          <p class="greeting-small">Good morning,</p>
+          <h3 class="greeting-name">Adithya <span class="role-badge">Patient</span></h3>
+        </div>
+        <button class="avatar-btn">
+          <div class="avatar">A</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="screen-body dashboard-body">
+
+      <!-- Safety Gate Banner -->
+      <div class="emergency-banner">
+        <div class="emergency-left">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 2L2 20h18L11 2z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M11 9v5M11 16v.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Emergency?</span>
+        </div>
+        <button class="btn-call" onclick="callAmbulance()">
+          📞 Call 999
+        </button>
+      </div>
+
+      <!-- Queue Card -->
+      <div class="card queue-card">
+        <div class="card-header-row">
+          <span class="card-title">Your Queue</span>
+          <span class="queue-status active-badge">Active</span>
+        </div>
+        <div class="queue-number-display">
+          <span class="queue-number">A-47</span>
+          <span class="queue-label">Queue Number</span>
+        </div>
+        <div class="queue-meta">
+          <div class="queue-meta-item">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="9" cy="9" r="7" stroke="#1A6BFF" stroke-width="1.5"/>
+              <path d="M9 5v4l3 2" stroke="#1A6BFF" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span><b>3</b> people ahead</span>
+          </div>
+          <div class="queue-meta-item">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="9" cy="9" r="7" stroke="#34C759" stroke-width="1.5"/>
+              <circle cx="9" cy="9" r="2.5" fill="#34C759"/>
+            </svg>
+            <span>Dr. Sarah Lim</span>
+          </div>
+        </div>
+        <div class="queue-actions">
+          <button class="btn-outline running-late" onclick="runningLate()">
+            ⏱️ Running Late
+          </button>
+          <button class="btn-primary-sm" onclick="goTo('screen-checkin')">
+            I Have Arrived
+          </button>
+        </div>
+      </div>
+
+      <!-- Tiles -->
+      <div class="tiles-grid">
+        <button class="tile" onclick="goTo('screen-checkin')">
+          <div class="tile-icon tile-icon--checkin">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M7 14l5 5 9-9" stroke="#1A6BFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="tile-label">Check In</span>
+        </button>
+
+        <button class="tile" onclick="alert('Opening map...')">
+          <div class="tile-icon tile-icon--map">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M14 3C9.582 3 6 6.582 6 11c0 6 8 14 8 14s8-8 8-14c0-4.418-3.582-8-8-8z" stroke="#FF9500" stroke-width="2"/>
+              <circle cx="14" cy="11" r="2.5" stroke="#FF9500" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <span class="tile-label">Directions</span>
+        </button>
+
+        <button class="tile" onclick="alert('Appointments coming soon...')">
+          <div class="tile-icon tile-icon--appt">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect x="4" y="6" width="20" height="18" rx="3" stroke="#AF52DE" stroke-width="2"/>
+              <path d="M4 11h20" stroke="#AF52DE" stroke-width="2"/>
+              <path d="M9 4v4M19 4v4" stroke="#AF52DE" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="tile-label">Appointments</span>
+        </button>
+
+        <button class="tile" onclick="logout()">
+          <div class="tile-icon tile-icon--logout">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M11 6H7a2 2 0 00-2 2v12a2 2 0 002 2h4" stroke="#FF3B30" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19 19l4-5-4-5M23 14H11" stroke="#FF3B30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="tile-label">Log Out</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <button class="tab active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 12L12 3l9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Queue</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M3 9h18" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Appointments</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 2.2 · ARRIVAL CHECK-IN
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-checkin">
+    <div class="screen-header with-back">
+      <button class="btn-back" onclick="goTo('screen-dashboard')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span class="header-title">Check In</span>
+    </div>
+
+    <div class="screen-body center-v">
+      <div class="checkin-illustration">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="48" stroke="#1A6BFF" stroke-width="2" stroke-dasharray="8 4"/>
+          <circle cx="50" cy="50" r="36" fill="#EEF3FF"/>
+          <path d="M32 52l12 12 24-24" stroke="#1A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="card checkin-card">
+        <h3 class="checkin-title">Queue #<span class="q-num">A-47</span></h3>
+        <p class="checkin-sub">3 people ahead of you</p>
+        <div class="divider"></div>
+        <p class="checkin-note">Tap the button below only when you are <strong>physically in the waiting room</strong>.</p>
+      </div>
+
+      <!-- Static Map -->
+      <div class="static-map">
+        <div class="map-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 6C16.268 6 10 12.268 10 20c0 10 14 22 14 22s14-12 14-22c0-7.732-6.268-14-14-14z" stroke="#1A6BFF" stroke-width="2.5"/>
+            <circle cx="24" cy="20" r="4" stroke="#1A6BFF" stroke-width="2"/>
+          </svg>
+          <span>Clinic Floor 1 — Waiting Room B</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn-primary btn-arrived" onclick="confirmArrival()">
+        ✅ I HAVE ARRIVED
+      </button>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       MODAL · ARRIVAL WARNING
+  ───────────────────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-arrival">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-icon warning-icon">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <path d="M22 4L2 40h40L22 4z" stroke="#FF9500" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M22 17v10M22 30v1.5" stroke="#FF9500" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">Are you in the waiting room?</h3>
+      <p class="modal-body">Only tap <b>"Confirm"</b> if you are <b>physically present</b> in the clinic waiting room.<br><br>If you are not here when called, you will be <b>moved to the end of the line.</b></p>
+      <div class="modal-actions">
+        <button class="btn-outline-modal" onclick="closeModal('modal-arrival')">Not Yet</button>
+        <button class="btn-confirm" onclick="completeArrival()">Yes, I'm Here</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       MODAL · RUNNING LATE
+  ───────────────────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-late">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-icon info-icon">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="19" stroke="#1A6BFF" stroke-width="2.5"/>
+          <path d="M22 14v10l6 4" stroke="#1A6BFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">Running Late?</h3>
+      <p class="modal-body">Tapping this will swap your queue position with the person behind you.<br><br>You can only use this <b>once every 10 minutes</b>.</p>
+      <div class="modal-actions">
+        <button class="btn-outline-modal" onclick="closeModal('modal-late')">Cancel</button>
+        <button class="btn-confirm" onclick="confirmLate()">Swap Position</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast hidden" id="toast">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="9" fill="#34C759"/>
+      <path d="M6 10l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span id="toast-msg">Done!</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
