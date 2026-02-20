@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow · Role Selection</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.2 · ROLE SELECTION
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-role" style="display: flex;">
+    <div class="screen-header">
+      <div class="header-logo-small">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="7" fill="#1A6BFF"/>
+          <path d="M14 6v16M6 14h16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span>Clinic Flow</span>
+      </div>
+    </div>
+
+    <div class="screen-body center-v">
+      <div class="section-label">Welcome</div>
+      <h2 class="screen-title">Who are you?</h2>
+      <p class="screen-sub">Select your role to continue</p>
+
+      <div class="role-cards">
+        <a class="role-card" href="phone-patient.html">
+          <div class="role-icon role-icon--patient">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="10" r="5" stroke="currentColor" stroke-width="2"/>
+              <path d="M6 26c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="role-text">
+            <span class="role-name">Patient</span>
+            <span class="role-desc">Book &amp; manage your queue</span>
+          </div>
+          <div class="role-arrow"><svg width="20" height="20"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+        </a>
+
+        <a class="role-card" href="phone-staff.html">
+          <div class="role-icon role-icon--staff">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="8" y="6" width="16" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 11h8M12 15h8M12 19h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="role-text">
+            <span class="role-name">Staff</span>
+            <span class="role-desc">Manage clinic operations</span>
+          </div>
+          <div class="role-arrow"><svg width="20" height="20"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+        </a>
+
+        <a class="role-card" href="phone-admin.html">
+          <div class="role-icon role-icon--admin">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+              <path d="M11 11l10 10M21 11l-10 10" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="role-text">
+            <span class="role-name">Admin</span>
+            <span class="role-desc">Dashboard &amp; oversight</span>
+          </div>
+          <div class="role-arrow"><svg width="20" height="20"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

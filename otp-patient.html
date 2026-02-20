@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow · Patient OTP</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.3 · REGISTRATION (Patient Path) — Step 2
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-otp-patient" style="display: flex;">
+    <div class="screen-header with-back">
+      <a class="btn-back" href="phone-patient.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="header-step">Step 2 of 2</div>
+    </div>
+    <div class="screen-body">
+      <div class="otp-icon"><svg width="56" height="56" fill="none"><rect width="56" height="56" rx="16" fill="#EEF3FF"/><path d="M18 28h20" stroke="#1A6BFF" stroke-width="2"/></svg></div>
+      <h2 class="screen-title">Verify your number</h2>
+      <p class="screen-sub">Enter the 6-digit code sent to your phone.</p>
+      <div class="otp-inputs">
+        <input class="otp-box" type="text" maxlength="1" value="4">
+        <input class="otp-box" type="text" maxlength="1" value="7">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+        <input class="otp-box" type="text" maxlength="1">
+      </div>
+      <div class="biometric-row">
+        <a class="btn-biometric" href="diagnosis.html">🛡️ Use Face ID</a>
+      </div>
+    </div>
+    <div class="screen-footer"><a class="btn-primary" href="diagnosis.html">Verify &amp; Continue</a></div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow · Patient Phone</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 0.3 · REGISTRATION (Patient Path) — Step 1
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-phone-patient" style="display: flex;">
+    <div class="screen-header with-back">
+      <a class="btn-back" href="role.html">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="header-step">Step 1 of 2</div>
+    </div>
+    <div class="screen-body">
+      <div class="section-label">Patient</div>
+      <h2 class="screen-title">Enter your phone number</h2>
+      <p class="screen-sub">Securely bind your device with OTP.</p>
+      <div class="form-group">
+        <div class="phone-input-row">
+          <div class="country-picker">🇲🇾 +60</div>
+          <input class="phone-input" type="tel" placeholder="12-345 6789">
+        </div>
+      </div>
+      <div class="info-note">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v5M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Standard SMS rates may apply.</span>
+      </div>
+    </div>
+    <div class="screen-footer"><a class="btn-primary" href="otp-patient.html">Send Code</a></div>
+  </div>
+
+</body>
+</html>

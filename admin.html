@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow · Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 3.1 · ADMIN DASHBOARD
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-admin" style="display: flex;">
+    <div class="dashboard-header">
+      <div class="dashboard-greeting">
+        <div>
+          <p class="greeting-small">Welcome,</p>
+          <h3 class="greeting-name">Admin <span class="role-badge">Staff</span></h3>
+        </div>
+        <a class="avatar" href="role.html">A</a>
+      </div>
+    </div>
+
+    <div class="screen-body dashboard-body">
+      <!-- Doctor Queue Management -->
+      <div style="padding: 0;">
+        <div class="admin-section-title">Active Doctors</div>
+
+        <!-- Doctor 1 -->
+        <div class="doctor-row">
+          <div class="doctor-row-top">
+            <div class="doctor-info">
+              <div class="doctor-avatar">SL</div>
+              <div>
+                <div class="doctor-name">Dr. Sarah Lim</div>
+                <div class="doctor-queue">Queue: A-47 through A-50 (4 patients)</div>
+              </div>
+            </div>
+            <a class="btn-sm btn-sm--break" href="modal-break.html">Pause</a>
+          </div>
+        </div>
+
+        <!-- Doctor 2 (with overflow) -->
+        <div class="doctor-row">
+          <div class="doctor-row-top">
+            <div class="doctor-info">
+              <div class="doctor-avatar">JC</div>
+              <div>
+                <div class="doctor-name">Dr. James Choi</div>
+                <div class="doctor-queue">Queue: B-12 through B-22 (10 patients) <span class="overflow-badge">At Capacity</span></div>
+              </div>
+            </div>
+            <a class="btn-sm btn-sm--break" href="modal-break.html">Pause</a>
+          </div>
+        </div>
+
+        <!-- Triage Queue -->
+        <div class="admin-section-title">Triage Queue (Awaiting Assignment)</div>
+        <div class="triage-list">
+          <div class="triage-item">
+            <div>
+              <div class="triage-name">Fatimah Binti Rahman</div>
+              <div class="triage-since">Waiting: 3 min</div>
+            </div>
+            <a class="btn-assign" href="admin.html">Assign to Sarah</a>
+          </div>
+          <div class="triage-item">
+            <div>
+              <div class="triage-name">Marcus Chen</div>
+              <div class="triage-since">Waiting: 5 min</div>
+            </div>
+            <a class="btn-assign" href="admin.html">Assign to James</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <button class="tab active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 12L12 3l9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Doctors</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Queues</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M3 9h18" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Reports</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+  </div>
+
+</body>
+</html>
