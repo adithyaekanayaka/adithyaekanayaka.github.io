@@ -221,7 +221,7 @@
 
     <div class="screen-body dashboard-body">
 
-      <!-- Safety Gate Banner -->
+      <!-- Safety Gate Banner (Spec §3 Screen 1.2) -->
       <div class="emergency-banner">
         <div class="emergency-left">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -230,44 +230,34 @@
           </svg>
           <span>Emergency?</span>
         </div>
-        <a class="btn-call" href="tel:999">
-          📞 Call 999
-        </a>
+        <a class="btn-call" href="tel:999">📞 Call 999</a>
       </div>
 
-      <!-- Queue Card -->
-      <div class="card queue-card">
+      <!-- Queue Card (Spec §3 Screen 1.6: Load Balancing by Count) -->
+      <div class="card queue-card highlight-card">
         <div class="card-header-row">
-          <span class="card-title">Your Queue</span>
-          <span class="queue-status active-badge">Active</span>
+          <span class="card-title">Virtual Queue</span>
+          <span class="queue-status active-badge">In Progress</span>
         </div>
         <div class="queue-number-display">
-          <span class="queue-number">A-47</span>
-          <span class="queue-label">Queue Number</span>
+          <div class="q-circle">
+            <span class="queue-number">A-47</span>
+            <span class="queue-label">MY TICKET</span>
+          </div>
         </div>
         <div class="queue-meta">
-          <div class="queue-meta-item">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <circle cx="9" cy="9" r="7" stroke="#1A6BFF" stroke-width="1.5"/>
-              <path d="M9 5v4l3 2" stroke="#1A6BFF" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <span><b>3</b> people ahead</span>
+          <div class="queue-meta-item color-blue">
+            <svg width="18" height="18"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span><b>2</b> patients ahead</span>
           </div>
           <div class="queue-meta-item">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <circle cx="9" cy="9" r="7" stroke="#34C759" stroke-width="1.5"/>
-              <circle cx="9" cy="9" r="2.5" fill="#34C759"/>
-            </svg>
+            <svg width="18" height="18"><circle cx="9" cy="9" r="3" fill="#34C759"/></svg>
             <span>Dr. Sarah Lim</span>
           </div>
         </div>
         <div class="queue-actions">
-          <a class="btn-outline running-late" href="#modal-late">
-            ⏱️ Running Late
-          </a>
-          <a class="btn-primary-sm" href="#screen-checkin">
-            I Have Arrived
-          </a>
+          <a class="btn-outline" href="#modal-late">⏱️ Running Late</a>
+          <a class="btn-primary-sm" href="#screen-checkin">I'm at Clinic</a>
         </div>
       </div>
 
