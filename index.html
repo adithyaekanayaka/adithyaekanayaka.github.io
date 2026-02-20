@@ -9,9 +9,9 @@
 <body>
 
   <!-- ─────────────────────────────────────────
-       SCREEN 0.1 · SPLASH
+       SCREEN 0.1 · SPLASH  (default screen)
   ───────────────────────────────────────── -->
-  <div class="screen active" id="screen-splash">
+  <div class="screen" id="screen-splash">
     <div class="splash-bg"></div>
     <div class="splash-content">
       <div class="splash-logo">
@@ -24,9 +24,7 @@
       <h1 class="splash-title">Clinic Flow</h1>
       <p class="splash-sub">Smart Queue Management</p>
     </div>
-    <div class="splash-loader">
-      <div class="loader-bar"><div class="loader-fill"></div></div>
-    </div>
+    <a class="splash-cta" href="#screen-role">Get Started</a>
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -449,6 +447,136 @@
       <div class="modal-actions">
         <a class="btn-outline-modal" href="#screen-dashboard">Cancel</a>
         <a class="btn-confirm" href="#screen-dashboard">Swap Position</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       SCREEN 3.1 · ADMIN DASHBOARD
+  ───────────────────────────────────────── -->
+  <div class="screen" id="screen-admin">
+    <div class="dashboard-header">
+      <div class="dashboard-greeting">
+        <div>
+          <p class="greeting-small">Welcome,</p>
+          <h3 class="greeting-name">Admin <span class="role-badge">Staff</span></h3>
+        </div>
+        <a class="avatar" href="#screen-role">A</a>
+      </div>
+    </div>
+
+    <div class="screen-body dashboard-body">
+      <!-- Doctor Queue Management -->
+      <div style="padding: 0;">
+        <div class="admin-section-title">Active Doctors</div>
+
+        <!-- Doctor 1 -->
+        <div class="doctor-row">
+          <div class="doctor-row-top">
+            <div class="doctor-info">
+              <div class="doctor-avatar">SL</div>
+              <div>
+                <div class="doctor-name">Dr. Sarah Lim</div>
+                <div class="doctor-queue">Queue: A-47 through A-50 (4 patients)</div>
+              </div>
+            </div>
+            <a class="btn-sm btn-sm--break" href="#modal-break">Pause</a>
+          </div>
+        </div>
+
+        <!-- Doctor 2 (with overflow) -->
+        <div class="doctor-row">
+          <div class="doctor-row-top">
+            <div class="doctor-info">
+              <div class="doctor-avatar">JC</div>
+              <div>
+                <div class="doctor-name">Dr. James Choi</div>
+                <div class="doctor-queue">Queue: B-12 through B-22 (10 patients) <span class="overflow-badge">At Capacity</span></div>
+              </div>
+            </div>
+            <a class="btn-sm btn-sm--break" href="#modal-break">Pause</a>
+          </div>
+        </div>
+
+        <!-- Triage Queue -->
+        <div class="admin-section-title">Triage Queue (Awaiting Assignment)</div>
+        <div class="triage-list">
+          <div class="triage-item">
+            <div>
+              <div class="triage-name">Fatimah Binti Rahman</div>
+              <div class="triage-since">Waiting: 3 min</div>
+            </div>
+            <a class="btn-assign" href="#screen-admin">Assign to Sarah</a>
+          </div>
+          <div class="triage-item">
+            <div>
+              <div class="triage-name">Marcus Chen</div>
+              <div class="triage-since">Waiting: 5 min</div>
+            </div>
+            <a class="btn-assign" href="#screen-admin">Assign to James</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <button class="tab active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 12L12 3l9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Doctors</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Queues</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M3 9h18" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Reports</span>
+      </button>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       MODAL · PAUSE/BREAK
+  ───────────────────────────────────────── -->
+  <div class="modal-overlay" id="modal-break">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-icon">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="8" y="10" width="6" height="24" rx="2" fill="#FF9500"/>
+          <rect x="20" y="10" width="6" height="24" rx="2" fill="#FF9500"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">Pause Queue</h3>
+      <p class="modal-body">How long will the doctor be on break?</p>
+
+      <div class="break-opts">
+        <a class="break-opt-btn default" href="#screen-admin">15 min</a>
+        <a class="break-opt-btn" href="#screen-admin">30 min</a>
+        <a class="break-opt-btn" href="#screen-admin">Until Resume</a>
+      </div>
+
+      <div class="modal-actions">
+        <a class="btn-outline-modal" href="#screen-admin">Cancel</a>
+        <a class="btn-confirm" href="#screen-admin">Confirm Break</a>
       </div>
     </div>
   </div>
