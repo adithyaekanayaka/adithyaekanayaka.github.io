@@ -50,10 +50,10 @@
       </div>
 
       <!-- Section 2: Patient Details -->
-      <div class="diagnosis-section">
+      <div class="diagnosis-section" id="patient-details-section" style="display: none;">
         <h3 class="diagnosis-section-title">Patient Details</h3>
 
-        <div class="text-field-group" id="other-name-group" style="display: none;">
+        <div class="text-field-group">
           <label class="text-field-label">Patient's Full Name</label>
           <input class="text-field" type="text" name="patient_name" placeholder="Enter full name">
         </div>
@@ -77,8 +77,8 @@
       <script>
         document.querySelectorAll('input[name="patient_relation"]').forEach(radio => {
           radio.addEventListener('change', (e) => {
-            const nameGroup = document.getElementById('other-name-group');
-            nameGroup.style.display = e.target.value === 'other' ? 'block' : 'none';
+            const detailsSection = document.getElementById('patient-details-section');
+            detailsSection.style.display = e.target.value === 'other' ? 'block' : 'none';
           });
         });
       </script>
