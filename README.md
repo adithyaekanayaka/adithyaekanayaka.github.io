@@ -52,13 +52,17 @@
    - **Safety:** Non-diagnostic—just supportive information
    - **Data Usage:** Feeds doctor notes; helps identify patterns
 
-5. **Medical History (Safe Questions)**
+5. **Patient Details (Self vs Someone Else)**
+   - **Logic:** Defaults to "Myself". When "Myself" is selected, the Name, Age, and Gender fields are hidden because this data is already linked from the user's profile and initial registration.
+   - **Action:** When "Someone else" is selected, these fields become visible so the user can provide the necessary details for the dependent.
+
+6. **Medical History (Safe Questions)**
    - **Text Fields:** Known Allergies, Current Medications
    - **Checkboxes:** Diabetes, Hypertension, Previous similar episodes
    - **Safety Principle:** Only asks about conditions that affect immediate treatment decisions
    - **Privacy:** No genetic data, no detailed psychiatric history, no socioeconomic questions
 
-6. **Legal Disclaimer**
+7. **Legal Disclaimer**
    - "This assessment is for triage only and does not replace a medical diagnosis."
    - **Compliance:** Meets WHO & healthcare law requirements for non-diagnostic triage tools
 
@@ -118,6 +122,9 @@
   * *Benefit:* **Saves 40+ hours of dev time.** No polling, no conditional locking logic.  
 * **Screen 2.3: Navigation**  
   * *Agreed:* Keep the "Static Map". Do not implement interactive maps.
+* **Screen 2.4: Pharmacy Delivery (New)**
+  * *Logic:* Added a dedicated Pharmacy Delivery page to the bottom navigation, replacing the Queue tab to reduce redundancy (as Queue and Directions were already easily accessible via the Dashboard).
+  * *Display:* Shows a map of nearby pharmacies with delivery distance, duration, and price, enabling patients to easily request home medicine delivery.
 
 ## **5\. Wireframe Flow 3: The Admin Dashboard**
 
@@ -183,6 +190,7 @@ clinic-flow/
 - **Screen 2.1:** Running Late Modal (Swap with next)
 - **Screen 2.2:** Arrival Check-In (Honor system unlock)
 - **Screen 2.3:** Static Map (Clinic location)
+- **Screen 2.4:** Pharmacy Delivery (Home medicine delivery map)
 
 #### **Admin Dashboard (§5)**
 - **Screen 3.1:** Active Doctors & Triage Queue
