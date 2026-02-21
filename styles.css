@@ -985,15 +985,8 @@ input[type="radio"]:checked ~ .radio-option {
   color: var(--text-b); transition: all .15s;
 }
 
-#severity-mild:checked,
-#severity-moderate:checked,
-#severity-severe:checked {
-  & ~ .severity-scale .severity-badge {
-    background: var(--surface); border-color: var(--border);
-  }
-}
-
-input[type="radio"][name="severity"]:checked + .severity-badge {
+/* Highlight for any pill-style radio badge (severity + similar 3-option questions) */
+input[type="radio"]:checked + .severity-badge {
   background: var(--blue-lt); border-color: var(--blue); color: var(--blue);
 }
 
