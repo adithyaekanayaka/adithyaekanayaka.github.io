@@ -92,11 +92,17 @@
 
 ## **3\. Wireframe Flow 1: The Patient Journey**
 
+* **Screen 1.1: Dashboard (Refined)**
+  * *Logic Simplification:* The "Log Out" tile on the dashboard was redundant since the "Profile" view already has a dedicated "Sign Out" button.
+  * *Update:* The Log Out tile was replaced with a new **Test Results** tile to give users instant access to their lab reports directly from the home screen grid.
 * **Screen 1.2: The "Safety Gate" (Scope Cut)**  
   * *Original:* "Flashlight toggle" and "Call Ambulance".  
   * *Critique:* Accessing the flashlight requires camera permission handling and hardware testing.  
   * *Improvement:* **Remove Flashlight.** Keep only the "Call Ambulance" button.  
   * *Action:* Tapping "Call Ambulance" immediately invokes the native system dialer with 1990 (or local equivalent) pre-filled.  
+* **Screen 1.4: Medical Reports (New)**
+  * *Logic:* Accessed via the Dashboard replacing the redundant Log Out button.
+  * *Display:* Displays a chronological list of test results, lab reports, and prescriptions. Tags clearly demarcate statuses such as 'Available' vs 'Pending'.
 * **Screen 1.6: Doctor Allocation (Logic Simplification)**  
   * *Original:* "Based on lowest wait time".  
   * *Critique:* Calculating "Time" is mathematically complex for an MVP.  
@@ -186,6 +192,7 @@ clinic-flow/
 - **Screen 1.1:** Patient Dashboard (home with queue status)
 - **Screen 1.0:** Quick Diagnostic Assessment (triage questionnaire)
 - **Screen 1.2:** Emergency Hotline (🏥 Call 999)
+- **Screen 1.4:** Medical Reports (Test results and history)
 - **Screen 1.6:** Queue Display (Load-balanced by count)
 - **Screen 2.1:** Running Late Modal (Swap with next)
 - **Screen 2.2:** Arrival Check-In (Honor system unlock)
