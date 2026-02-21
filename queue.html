@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Clinic Flow · My Queue</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <!-- ─────────────────────────────────────────
+       SCREEN 1.4 · QUEUE STATUS
+  ───────────────────────────────────────── -->
+    <div class="screen" id="screen-queue" style="display: flex;">
+        <div class="screen-header with-back">
+            <a href="dashboard.html" class="btn-back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </a>
+            <h3 class="header-title">Live Queue Status</h3>
+        </div>
+
+        <div class="screen-body" style="padding-top: 20px;">
+
+            <!-- Main Queue Display -->
+            <div class="card queue-card highlight-card" style="margin-bottom: 24px;">
+                <div class="card-header-row">
+                    <span class="card-title">Virtual Queue</span>
+                    <span class="queue-status active-badge">In Progress</span>
+                </div>
+                <div class="queue-number-display" style="padding: 24px 0;">
+                    <div class="q-circle">
+                        <span class="queue-number">A-47</span>
+                        <span class="queue-label">MY TICKET</span>
+                    </div>
+                </div>
+                <div class="queue-meta" style="padding: 20px 0;">
+                    <div class="queue-meta-item color-blue" style="font-size: 16px;">
+                        <svg width="20" height="20">
+                            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8" />
+                        </svg>
+                        <span><b>2</b> patients ahead</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Provider Info -->
+            <div class="section-label">Your Clinician</div>
+            <div class="role-card" style="margin-top: 0; margin-bottom: 24px;">
+                <div class="role-icon" style="background: #F0FFF4; color: #34C759;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                        <circle cx="8.5" cy="7" r="4" />
+                        <polyline points="17 11 19 13 23 9" />
+                    </svg>
+                </div>
+                <div class="role-text">
+                    <span class="role-name">Dr. Sarah Lim</span>
+                    <span class="role-desc">Specialist Physician</span>
+                </div>
+            </div>
+
+            <!-- Timeline / Next Steps -->
+            <div class="section-label">Estimated Timeline</div>
+            <div class="card" style="padding: 24px;">
+                <div style="display: flex; gap: 16px; position: relative;">
+                    <!-- Timeline Vertical Line -->
+                    <div
+                        style="width: 2px; background: var(--border); position: absolute; left: 11px; top: 12px; bottom: 12px; z-index: 0;">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 32px; width: 100%;">
+                        <!-- Step 1 Done -->
+                        <div style="display: flex; gap: 16px; position: relative; z-index: 1;">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: white;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span style="font-size: 14px; font-weight: 600; color: var(--text-h);">Check-in
+                                    Complete</span>
+                                <p style="font-size: 12px; color: var(--text-m);">09:15 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 Active -->
+                        <div style="display: flex; gap: 16px; position: relative; z-index: 1;">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue); border: 4px solid var(--blue-lt);">
+                            </div>
+                            <div>
+                                <span style="font-size: 14px; font-weight: 700; color: var(--blue);">Waiting in
+                                    Queue</span>
+                                <p style="font-size: 12px; color: var(--text-m);">Est. wait: 12 mins</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 Future -->
+                        <div style="display: flex; gap: 16px; position: relative; z-index: 1;">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: var(--surface2); border: 2px solid var(--border);">
+                            </div>
+                            <div>
+                                <span
+                                    style="font-size: 14px; font-weight: 600; color: var(--text-lt);">Consultation</span>
+                                <p style="font-size: 12px; color: var(--text-lt);">Room 402</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; display: flex; gap: 12px;">
+                <a class="btn-outline" href="modal-late.html" style="flex: 1;">⏱️ Running Late</a>
+                <a class="btn-primary-sm" href="checkin.html" style="flex: 1; text-align: center;">🏠 I'm at Clinic</a>
+            </div>
+        </div>
+
+        <!-- Tab Bar -->
+        <nav class="tab-bar">
+            <a href="dashboard.html" class="tab">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 12L12 3l9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" />
+                </svg>
+                <span>Home</span>
+            </a>
+            <a href="queue.html" class="tab active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                    <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <span>Queue</span>
+            </a>
+            <a href="directions.html" class="tab">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 3C9.582 3 6 6.582 6 11c0 6 8 14 8 14s8-8 8-14c0-4.418-3.582-8-8-8z"
+                        stroke="currentColor" stroke-width="2" />
+                    <circle cx="14" cy="11" r="2.5" stroke="currentColor" stroke-width="1.8" />
+                </svg>
+                <span>Directions</span>
+            </a>
+            <a href="profile.html" class="tab">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+                    <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" />
+                </svg>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+</body>
+
+</html>
