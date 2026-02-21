@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Clinic Flow · Check In</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
   <!-- ─────────────────────────────────────────
@@ -15,7 +17,8 @@
     <div class="screen-header with-back">
       <a class="btn-back" href="dashboard.html">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
       </a>
       <span class="header-title">Check In</span>
@@ -24,9 +27,10 @@
     <div class="screen-body center-v">
       <div class="checkin-illustration">
         <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="50" r="48" stroke="#1A6BFF" stroke-width="2" stroke-dasharray="8 4"/>
-          <circle cx="50" cy="50" r="36" fill="#EEF3FF"/>
-          <path d="M32 52l12 12 24-24" stroke="#1A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="50" cy="50" r="48" stroke="#1A6BFF" stroke-width="2" stroke-dasharray="8 4" />
+          <circle cx="50" cy="50" r="36" fill="#EEF3FF" />
+          <path d="M32 52l12 12 24-24" stroke="#1A6BFF" stroke-width="4" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
       </div>
 
@@ -34,27 +38,65 @@
         <h3 class="checkin-title">Queue #<span class="q-num">A-47</span></h3>
         <p class="checkin-sub">3 people ahead of you</p>
         <div class="divider"></div>
-        <p class="checkin-note">Tap the button below only when you are <strong>physically in the waiting room</strong>.</p>
+        <p class="checkin-note">Tap the button below only when you are <strong>physically in the waiting room</strong>.
+        </p>
       </div>
 
       <!-- Static Map -->
       <div class="static-map">
         <div class="map-placeholder">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <path d="M24 6C16.268 6 10 12.268 10 20c0 10 14 22 14 22s14-12 14-22c0-7.732-6.268-14-14-14z" stroke="#1A6BFF" stroke-width="2.5"/>
-            <circle cx="24" cy="20" r="4" stroke="#1A6BFF" stroke-width="2"/>
+            <path d="M24 6C16.268 6 10 12.268 10 20c0 10 14 22 14 22s14-12 14-22c0-7.732-6.268-14-14-14z"
+              stroke="#1A6BFF" stroke-width="2.5" />
+            <circle cx="24" cy="20" r="4" stroke="#1A6BFF" stroke-width="2" />
           </svg>
           <span>Clinic Floor 1 — Waiting Room B</span>
         </div>
       </div>
     </div>
 
-    <div class="screen-footer">
+    <div class="screen-footer" style="padding-bottom: 0;">
       <a class="btn-primary btn-arrived" href="modal-arrival.html">
         ✅ I HAVE ARRIVED
       </a>
     </div>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <a href="dashboard.html" class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 12L12 3l9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" />
+        </svg>
+        <span>Home</span>
+      </a>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+          <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <span>Queue</span>
+      </button>
+      <a href="directions.html" class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M14 3C9.582 3 6 6.582 6 11c0 6 8 14 8 14s8-8 8-14c0-4.418-3.582-8-8-8z" stroke="currentColor"
+            stroke-width="2" />
+          <circle cx="14" cy="11" r="2.5" stroke="currentColor" stroke-width="1.8" />
+        </svg>
+        <span>Directions</span>
+      </a>
+      <button class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+          <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" />
+        </svg>
+        <span>Profile</span>
+      </button>
+    </nav>
   </div>
 
 </body>
+
 </html>
