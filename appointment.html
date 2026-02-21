@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow · Appointment</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Appointment-only helpers (small, token-aligned) */
+    .appt-hero {
+      background: linear-gradient(165deg, rgba(26,107,255,.12) 0%, rgba(26,107,255,.04) 60%, transparent 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .appt-hero-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(26,107,255,.12);
+      color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .appt-hero-title { font-size: 15px; font-weight: 800; color: var(--text-h); margin-bottom: 2px; }
+    .appt-hero-sub   { font-size: 13px; color: var(--text-m); line-height: 1.5; }
+
+    .chip-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chip {
+      flex: 0 0 auto;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+      color: var(--text-b);
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .chip:active { transform: scale(.98); }
+    input[type="radio"].chip-input { position: absolute; opacity: 0; pointer-events: none; }
+    input[type="radio"].chip-input:checked + label.chip {
+      background: var(--blue-lt);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 360px) {
+      .slot-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .slot {
+      display: block;
+      padding: 12px 10px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-b);
+      cursor: pointer;
+      user-select: none;
+    }
+    .slot small { display: block; margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--text-m); }
+    .slot:active { transform: scale(.98); }
+    input[type="radio"].slot-input { position: absolute; opacity: 0; pointer-events: none; }
+    input[type="radio"].slot-input:checked + label.slot {
+      background: var(--blue-lt);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .rec-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .rec-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(52,199,89,.12);
+      color: var(--green);
+      font-weight: 800;
+      font-size: 12px;
+      border: 1px solid rgba(52,199,89,.25);
+    }
+    .rec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .rec-k { font-size: 11px; color: var(--text-m); font-weight: 800; letter-spacing: .3px; }
+    .rec-v { font-size: 14px; color: var(--text-h); font-weight: 800; margin-top: 4px; }
+
+    .mini-actions { display:flex; gap:10px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+
+  <div class="screen" id="screen-appointment" style="display:flex;">
+    <div class="screen-header with-back">
+      <a class="btn-back" href="dashboard.html" aria-label="Back">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <span class="header-title">Appointment</span>
+    </div>
+
+    <div class="screen-body" style="display:flex; flex-direction:column; gap:16px;">
+
+      <div class="appt-hero">
+        <div class="appt-hero-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M8 2v3M16 2v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3.5 9h17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 5h12a2.5 2.5 0 0 1 2.5 2.5v12A2.5 2.5 0 0 1 18 22H6A2.5 2.5 0 0 1 3.5 19.5v-12A2.5 2.5 0 0 1 6 5Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 13h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="appt-hero-title">The system assigns your doctor</div>
+          <div class="appt-hero-sub">Tap a few buttons for a quick triage. Then we recommend the best doctor and you choose a time. (No typing.)</div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="diagnosis-notice">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v4M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span><b>Disclaimer:</b> This is for triage only and does not replace a medical diagnosis.</span>
+      </div>
+
+      <!-- Quick Diagnostic Assessment (same logic as diagnosis page) -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:6px;">Quick Assessment</h3>
+        <p class="diagnosis-section-sub" style="margin-top:0;">What’s the main issue today?</p>
+
+        <div class="symptom-buttons" style="margin-top:10px;">
+          <input type="radio" id="appt-symptom-respiratory" name="chief_complaint" value="respiratory" hidden>
+          <label for="appt-symptom-respiratory" class="symptom-btn"><span>Cough / Cold</span></label>
+
+          <input type="radio" id="appt-symptom-gi" name="chief_complaint" value="gastrointestinal" hidden>
+          <label for="appt-symptom-gi" class="symptom-btn"><span>Nausea / Vomiting</span></label>
+
+          <input type="radio" id="appt-symptom-pain" name="chief_complaint" value="musculoskeletal" hidden>
+          <label for="appt-symptom-pain" class="symptom-btn"><span>Pain / Injury</span></label>
+
+          <input type="radio" id="appt-symptom-fever" name="chief_complaint" value="fever" hidden>
+          <label for="appt-symptom-fever" class="symptom-btn"><span>Fever</span></label>
+
+          <input type="radio" id="appt-symptom-skin" name="chief_complaint" value="skin" hidden>
+          <label for="appt-symptom-skin" class="symptom-btn"><span>Skin Issue</span></label>
+
+          <input type="radio" id="appt-symptom-headache" name="chief_complaint" value="headache" hidden>
+          <label for="appt-symptom-headache" class="symptom-btn"><span>Headache</span></label>
+
+          <input type="radio" id="appt-symptom-other" name="chief_complaint" value="other" hidden>
+          <label for="appt-symptom-other" class="symptom-btn"><span>Other</span></label>
+        </div>
+
+        <div style="height:14px;"></div>
+
+        <p class="diagnosis-section-sub" style="margin-top:0;">How long has it been?</p>
+        <div class="radio-options" aria-label="Duration">
+          <label class="radio-option">
+            <input type="radio" name="duration" value="acute" hidden>
+            <span class="radio-custom"></span>
+            <span class="radio-label">Less than 24 hours</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="duration" value="recent" hidden>
+            <span class="radio-custom"></span>
+            <span class="radio-label">1–3 days</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="duration" value="subacute" hidden>
+            <span class="radio-custom"></span>
+            <span class="radio-label">4–7 days</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="duration" value="chronic" hidden>
+            <span class="radio-custom"></span>
+            <span class="radio-label">More than a week</span>
+          </label>
+        </div>
+
+        <div style="height:14px;"></div>
+
+        <p class="diagnosis-section-sub" style="margin-top:0;">How severe is it?</p>
+        <div class="severity-scale" aria-label="Severity">
+          <label class="severity-option">
+            <input type="radio" name="severity" value="mild" hidden>
+            <span class="severity-badge">Mild</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="severity" value="moderate" hidden>
+            <span class="severity-badge">Moderate</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="severity" value="severe" hidden>
+            <span class="severity-badge">Severe</span>
+          </label>
+        </div>
+        <p class="diagnosis-hint" style="margin-top:10px;">* Severe cases get higher priority.</p>
+      </div>
+
+      <!-- System Recommendation (doctor assignment) -->
+      <div class="rec-card">
+        <div class="rec-pill">
+          <span aria-hidden="true">✅</span>
+          <span>Recommended for you</span>
+        </div>
+
+        <div class="rec-grid">
+          <div>
+            <div class="rec-k">ASSIGNED DOCTOR</div>
+            <div class="rec-v">Dr. Silva (GP)</div>
+          </div>
+          <div>
+            <div class="rec-k">QUEUE STATUS</div>
+            <div class="rec-v">2 people ahead</div>
+          </div>
+          <div>
+            <div class="rec-k">VISIT TYPE</div>
+            <div class="rec-v">In-person</div>
+          </div>
+          <div>
+            <div class="rec-k">CONFIRM ONLY</div>
+            <div class="rec-v">No typing needed</div>
+          </div>
+        </div>
+
+        <div class="mini-actions">
+          <a class="btn-outline" href="diagnosis.html">Edit assessment</a>
+          <a class="btn-outline" href="dashboard.html">Back to dashboard</a>
+        </div>
+      </div>
+
+      <!-- Date selection -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:10px;">Pick a date</h3>
+        <div class="chip-row" role="radiogroup" aria-label="Appointment date">
+          <input class="chip-input" type="radio" name="appt-date" id="d1" checked />
+          <label class="chip" for="d1">Today</label>
+
+          <input class="chip-input" type="radio" name="appt-date" id="d2" />
+          <label class="chip" for="d2">Tomorrow</label>
+
+          <input class="chip-input" type="radio" name="appt-date" id="d3" />
+          <label class="chip" for="d3">Thu</label>
+
+          <input class="chip-input" type="radio" name="appt-date" id="d4" />
+          <label class="chip" for="d4">Fri</label>
+
+          <input class="chip-input" type="radio" name="appt-date" id="d5" />
+          <label class="chip" for="d5">Sat</label>
+        </div>
+      </div>
+
+      <!-- Time slots -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:10px;">Pick a time</h3>
+        <div class="slot-grid" role="radiogroup" aria-label="Appointment time">
+          <input class="slot-input" type="radio" name="appt-time" id="t1" checked />
+          <label class="slot" for="t1">09:00 <small>Low wait</small></label>
+
+          <input class="slot-input" type="radio" name="appt-time" id="t2" />
+          <label class="slot" for="t2">10:30 <small>Low wait</small></label>
+
+          <input class="slot-input" type="radio" name="appt-time" id="t3" />
+          <label class="slot" for="t3">12:00 <small>Medium</small></label>
+
+          <input class="slot-input" type="radio" name="appt-time" id="t4" />
+          <label class="slot" for="t4">14:00 <small>Medium</small></label>
+
+          <input class="slot-input" type="radio" name="appt-time" id="t5" />
+          <label class="slot" for="t5">15:30 <small>Busy</small></label>
+
+          <input class="slot-input" type="radio" name="appt-time" id="t6" />
+          <label class="slot" for="t6">17:00 <small>Busy</small></label>
+        </div>
+      </div>
+
+      <!-- Minimal initial detail (buttons only) -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:10px;">Is this a follow-up?</h3>
+        <div class="severity-scale" aria-label="Visit is follow-up">
+          <label class="severity-option">
+            <input type="radio" name="followup" value="new" hidden>
+            <span class="severity-badge">New visit</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="followup" value="followup" hidden>
+            <span class="severity-badge">Follow-up</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="followup" value="not_sure" hidden>
+            <span class="severity-badge">Not sure</span>
+          </label>
+        </div>
+        <p class="diagnosis-hint" style="margin-top:10px;">If unsure, choose “Not sure”. The doctor will confirm.</p>
+      </div>
+
+    </div>
+
+    <div class="screen-footer"  style="display:flex; flex-direction:column;">
+      <a class="btn-primary" href="dashboard.html">Confirm appointment</a>
+      <div style="height:10px;"></div>
+      <a class="btn-outline" href="dashboard.html">Save draft</a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -154,14 +154,37 @@
         <h3 class="diagnosis-section-title">Medical History</h3>
         <p class="diagnosis-section-sub">Help us understand your background</p>
 
-        <div class="text-field-group">
-          <label class="text-field-label">Known Allergies</label>
-          <input class="text-field" type="text" name="allergies" placeholder="E.g., Penicillin, Aspirin, others">
+        <!-- No typing (Lazy Thumb rule). Quick safe toggles only. -->
+        <h4 class="diagnosis-section-sub" style="margin-top:0;">Known Allergies</h4>
+        <div class="severity-scale" aria-label="Known allergies">
+          <label class="severity-option">
+            <input type="radio" name="allergies" value="none" hidden>
+            <span class="severity-badge">None</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="allergies" value="yes" hidden>
+            <span class="severity-badge">Yes</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="allergies" value="not_sure" hidden>
+            <span class="severity-badge">Not sure</span>
+          </label>
         </div>
 
-        <div class="text-field-group">
-          <label class="text-field-label">Current Medications</label>
-          <input class="text-field" type="text" name="medications" placeholder="E.g., Ibuprofen, others">
+        <h4 class="diagnosis-section-sub" style="margin-top:12px;">Current Medications</h4>
+        <div class="severity-scale" aria-label="Current medications">
+          <label class="severity-option">
+            <input type="radio" name="medications" value="none" hidden>
+            <span class="severity-badge">None</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="medications" value="yes" hidden>
+            <span class="severity-badge">Yes</span>
+          </label>
+          <label class="severity-option">
+            <input type="radio" name="medications" value="not_sure" hidden>
+            <span class="severity-badge">Not sure</span>
+          </label>
         </div>
 
         <label class="checkbox-option">
