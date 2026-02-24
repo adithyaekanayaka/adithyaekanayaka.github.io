@@ -210,6 +210,76 @@
       font-size: 13px; font-weight: 700; color: var(--blue);
     }
 
+    /* ── Selectable card state ── */
+    .rx-card.selectable { cursor: pointer; user-select: none; }
+
+    .rx-card.selected {
+      border-color: var(--blue);
+      background: rgba(26,107,255,.03);
+      box-shadow: 0 0 0 1px var(--blue), var(--shadow-sm);
+    }
+
+    /* ── Checkbox indicator ── */
+    .rx-select-check {
+      width: 22px; height: 22px; flex-shrink: 0;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      transition: background .15s, border-color .15s;
+    }
+    .rx-card.selected .rx-select-check {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    .rx-select-check svg { opacity: 0; transition: opacity .15s; }
+    .rx-card.selected .rx-select-check svg { opacity: 1; }
+
+    /* ── Fill CTA as button (inside selectable card) ── */
+    .rx-fill-cta-btn {
+      width: 100%; margin-top: 12px; padding: 10px;
+      background: var(--blue-lt);
+      border: none; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 700; color: var(--blue);
+      cursor: pointer; font-family: var(--font);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background .15s;
+    }
+    .rx-fill-cta-btn:active { background: rgba(26,107,255,.18); }
+
+    /* ── Select-All toggle in header ── */
+    .header-title { flex: 1; }
+    .select-all-btn {
+      font-size: 13px; font-weight: 700; color: var(--blue);
+      background: none; border: none; cursor: pointer; font-family: var(--font);
+      padding: 4px 0; white-space: nowrap;
+    }
+    .select-all-btn:active { opacity: .6; }
+
+    /* ── Bulk fill bar ── */
+    .bulk-fill-bar {
+      flex-shrink: 0;
+      display: none;
+      align-items: center; justify-content: space-between;
+      background: var(--text-h);
+      color: white;
+      padding: 14px 20px;
+      gap: 12px;
+    }
+    .bulk-fill-bar.visible { display: flex; }
+    @media (min-width: 600px) {
+      .bulk-fill-bar { padding: 14px 28px; }
+    }
+    .bulk-bar-label { font-size: 12px; opacity: .65; }
+    .bulk-bar-count { font-size: 15px; font-weight: 700; }
+    .bulk-fill-btn {
+      flex-shrink: 0;
+      background: var(--blue); color: white; border: none;
+      padding: 11px 18px; border-radius: 12px;
+      font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--font);
+    }
+    .bulk-fill-btn:active { transform: scale(.95); }
+
     /* ── Tab bar ── */
     .tab-bar {
       flex-shrink: 0;
@@ -242,6 +312,7 @@
         </svg>
       </a>
       <span class="header-title">Prescriptions</span>
+      <button class="select-all-btn" id="selectAllBtn" onclick="toggleSelectAll()">Select All</button>
     </div>
 
     <div class="screen-body">
@@ -249,9 +320,12 @@
       <!-- ── Active ── -->
       <p class="section-label">Active</p>
 
-      <!-- Active prescription — tap to fill at pharmacy -->
-      <a class="rx-card" href="pharmacy.html">
+      <!-- Active prescriptions — tap card to select; or tap "Fill at Pharmacy" as a single quick-fill shortcut -->
+      <div class="rx-card selectable" id="rx-amox" onclick="toggleRx('rx-amox')">
         <div class="rx-card-top">
+          <div class="rx-select-check">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <div class="rx-icon rx-icon--active">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path d="m10.5 20.5-7-7a5 5 0 1 1 7-7l7 7a5 5 0 1 1-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -263,9 +337,6 @@
             <div class="rx-dosage">1 capsule · 3× daily · 7 days</div>
           </div>
           <span class="rx-badge badge-active">Active</span>
-          <svg class="rx-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
         <div class="rx-details">
           <div class="rx-detail-item">
@@ -285,14 +356,17 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16v.5"/></svg>
           New prescription — not yet filled
         </div>
-        <div class="rx-fill-cta">
+        <button class="rx-fill-cta-btn" onclick="event.stopPropagation(); window.location.href='pharmacy.html'">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M10 9h6M13 6v6"/></svg>
           Fill at Pharmacy →
-        </div>
-      </a>
+        </button>
+      </div>
 
-      <a class="rx-card" href="pharmacy.html">
+      <div class="rx-card selectable" id="rx-para" onclick="toggleRx('rx-para')">
         <div class="rx-card-top">
+          <div class="rx-select-check">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <div class="rx-icon rx-icon--active">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path d="m10.5 20.5-7-7a5 5 0 1 1 7-7l7 7a5 5 0 1 1-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -304,9 +378,6 @@
             <div class="rx-dosage">1–2 tablets · as needed · max 8/day</div>
           </div>
           <span class="rx-badge badge-active">Active</span>
-          <svg class="rx-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
         <div class="rx-details">
           <div class="rx-detail-item">
@@ -322,11 +393,11 @@
             Expires 10 May 2026
           </div>
         </div>
-        <div class="rx-fill-cta">
+        <button class="rx-fill-cta-btn" onclick="event.stopPropagation(); window.location.href='pharmacy.html'">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M10 9h6M13 6v6"/></svg>
           Fill at Pharmacy →
-        </div>
-      </a>
+        </button>
+      </div>
 
       <!-- ── Past ── -->
       <p class="section-label">Past</p>
@@ -395,6 +466,17 @@
 
     </div>
 
+    <!-- Bulk fill action bar — appears when ≥1 Rx is selected -->
+    <div class="bulk-fill-bar" id="bulkBar">
+      <div>
+        <div class="bulk-bar-label">Ready to fill</div>
+        <div class="bulk-bar-count" id="bulkCount">1 Prescription</div>
+      </div>
+      <button class="bulk-fill-btn" onclick="window.location.href='pharmacy.html'">
+        Fill at Pharmacy →
+      </button>
+    </div>
+
     <!-- Footer: Browse All Pharmacies (OTC fallback) -->
     <div class="screen-footer">
       <a class="btn-outline-full" href="pharmacy.html" style="display:flex; align-items:center; justify-content:center; gap:8px;">
@@ -443,5 +525,57 @@
 
   </div>
 
+  <script>
+    const ACTIVE_IDS = ['rx-amox', 'rx-para'];
+    const selected = new Set();
+
+    function toggleRx(id) {
+      const card = document.getElementById(id);
+      if (selected.has(id)) {
+        selected.delete(id);
+        card.classList.remove('selected');
+      } else {
+        selected.add(id);
+        card.classList.add('selected');
+      }
+      syncBulkBar();
+      syncSelectAllBtn();
+    }
+
+    function toggleSelectAll() {
+      const allSelected = ACTIVE_IDS.every(id => selected.has(id));
+      if (allSelected) {
+        ACTIVE_IDS.forEach(id => {
+          selected.delete(id);
+          document.getElementById(id).classList.remove('selected');
+        });
+      } else {
+        ACTIVE_IDS.forEach(id => {
+          selected.add(id);
+          document.getElementById(id).classList.add('selected');
+        });
+      }
+      syncBulkBar();
+      syncSelectAllBtn();
+    }
+
+    function syncBulkBar() {
+      const bar = document.getElementById('bulkBar');
+      const countEl = document.getElementById('bulkCount');
+      const n = selected.size;
+      if (n > 0) {
+        bar.classList.add('visible');
+        countEl.textContent = n === 1 ? '1 Prescription' : n + ' Prescriptions';
+      } else {
+        bar.classList.remove('visible');
+      }
+    }
+
+    function syncSelectAllBtn() {
+      const btn = document.getElementById('selectAllBtn');
+      const allSelected = ACTIVE_IDS.every(id => selected.has(id));
+      btn.textContent = allSelected ? 'Deselect All' : 'Select All';
+    }
+  </script>
 </body>
 </html>

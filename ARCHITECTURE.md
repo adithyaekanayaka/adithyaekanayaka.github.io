@@ -70,15 +70,19 @@ graph TD
     Role -->|Staff/Admin| SPhone --> SOTP --> AdminD
     
     Diag --> Dash
-    Dash --> CheckIn & ApptList & ClinTests & Reports & Rx & Profile
+    Dash --> CheckIn & ApptList & Rx & Queue & Profile
     CheckIn -.-> Directions
     ApptList --> ForWhom --> Appts
+    ApptList -->|Clinical Tests btn| ClinTests
+    ApptList -->|Test Results btn| Reports
     Appts --> QuickAssess --> Dash
     Appts -.-> ApptDirections
     Rx --> Pharm
     ApptDirections --> Directions
     
     ClinTests -->|View Result| Reports
+    ClinTests -.->|back| ApptList
+    Reports -.->|back| ClinTests
     
     CheckIn -.-> Honor
     Dash -.-> Late
@@ -131,12 +135,12 @@ graph TD
 | **Splash & Role** | ✅ **Done** | Token check logic (simulated) + Role separation. |
 | **Auth (OTP/PIN)** | ✅ **Done** | 2-step phone binding for Patients; Credential binding for Staff. |
 | **Triage (Diagnosis)** | ✅ **Done** | **"The System Decisions":** Specialist matching based on symptom selection. |
-| **Patient Dashboard** | ✅ **Done** | **"Lazy Thumb":** Directions tile replaced by Clinical Tests — maps full patient lifecycle. |
+| **Patient Dashboard** | ✅ **Done (V2.7)** | **"Lazy Thumb":** Tiles restructured — Check In · Book Appt (→ For Whom sheet) · Prescriptions · My Queue. Clinical Tests & Test Results retired as standalone tiles; now appointment-scoped. |
 | **Contextual Directions** | ✅ **Done (V2.4)** | **"Right Place":** Directions CTA added to `appointment.html` footer so wayfinding appears at the moment of booking, not on the dashboard. |
 | **Appointments List** | ✅ **Done (V2.6)** | **"Right Start":** `appointments.html` shows full history. "New Appointment" CTA triggers For Whom sheet before routing to booking form. |
-| **Prescriptions Nav** | ✅ **Done (V2.6)** | **"Lazy Thumb":** Pharmacy replaced in bottom nav by Rx. Tap a prescription → pharmacy.html pre-loaded. OTC access via "Browse All" footer CTA. |
+| **Prescriptions Nav** | ✅ **Done (V2.8)** | **"Lazy Thumb":** Pharmacy replaced in bottom nav by Rx. Tap a prescription → pharmacy.html pre-loaded. Multi-select: tick multiple active Rx cards and fill in one pharmacy run. "Select All" / "Deselect All" toggle in header. OTC access via "Browse All" footer CTA. |
 | **Post-Booking Assessment** | 🔷 **Logic Defined (V2.5)** | **"Close the Loop":** Quick Assessment step inserted after appointment confirmation — captures any updated symptoms or prep requirements before returning patient to dashboard. |
-| **Clinical Tests** | ✅ **Done** | **"Zero Input":** All test data (doctor, location, prep) pre-filled. 4-step visual pipeline. Cross-links to Test Results. |
+| **Clinical Tests** | ✅ **Done (V2.7)** | **"Zero Input":** All test data (doctor, location, prep) pre-filled. 4-step visual pipeline. Back nav → Appointments. Context header shows parent appointment. |
 | **Queue Management** | ✅ **Done** | **"Honor System":** Arrival check-in is intentional/user-driven to save dev time. |
 | **Admin Controls** | ✅ **Done** | **"Timed Break Mode":** Auto-resumption of queue to prevent human error. |
 | **Pharmacy Delivery** | ✅ **Done** | **Contextual UX:** Replaced Queue tab with Pharmacy for post-consultation needs. |
@@ -156,12 +160,22 @@ graph TD
 ### **Key Improvements Applied (V2.4)**
 9.  **Contextual Directions Access (V2.4):** Directions removed from dashboard (wrong frequency) but re-surfaced contextually in `appointment.html` footer. The user sees a "Get Directions to Clinic" CTA immediately after confirming or saving a booking — the only moment they genuinely need wayfinding. Check-In retains its own directions link for day-of use. Right feature, right place.
 
+### **Key Improvements Applied (V2.7)**
+13. **Appointment-Contextual Navigation Chain (V2.7):** Clinical Tests and Test Results are no longer reachable as standalone dashboard tiles. Access is now always appointment-scoped: each appointment card in `appointments.html` exposes inline action buttons — orange "Clinical Tests" (→ `clinical-tests.html`) and/or green "Test Results" (→ `reports.html`) — shown only when contextually relevant (suppressed on cancelled appointments). Back navigation throughout the chain returns to the parent screen (`reports.html` ← `clinical-tests.html` ← `appointments.html`). Context headers in both screens display the originating appointment (doctor + date).
+
+14. **Dashboard Tile Restructure (V2.7):** Four quick-action tiles realigned. "Clinical Tests" → **Prescriptions** (`prescriptions.html`). "Test Results" → **My Queue** (`queue.html`). "Appointments" → **"Book Appt"** (links directly to `appointments.html#for-whom`, skipping the history list). New tile map: Check In · Book Appt · Prescriptions · My Queue.
+
+15. **Direct-to-Sheet Booking Shortcut (V2.7):** Dashboard "Book Appt" tile bypasses the appointment history list and opens the "Who is this for?" bottom-sheet directly, removing one tap from the booking creation flow. Appointment history remains accessible via the bottom nav Appts tab.
+
 ### **Key Improvements Applied (V2.6)**
 11. **Appointments List + For Whom (V2.6):** New `appointments.html` serves as the Appointments entry point — shows history (Upcoming / Past / Cancelled) and a "New Appointment" CTA that triggers a CSS `:target` bottom-sheet asking who the appointment is for before routing to the booking form. `appointment.html` back nav now returns to `appointments.html`.
 12. **Prescriptions Replace Pharmacy in Nav (V2.6):** Bottom nav tab changed from Pharmacy → Rx (`prescriptions.html`). Pharmacy is now a fulfilment destination reached contextually from a prescription card (tap → `pharmacy.html`). A "Browse All Pharmacies" footer CTA preserves OTC access.
 
 ### **Key Improvements Applied (V2.5)**
 10. **Post-Booking Quick Assessment (V2.5):** A lightweight assessment step is inserted immediately after an appointment is created. This captures any symptom updates or preparation requirements while the context is fresh, then returns the patient to the dashboard. Flow: `appointment.html` → Quick Assessment → `dashboard.html`. Prevents the gap where a patient books an appointment but no updated clinical context is recorded until the visit day.
+
+### **Key Improvements Applied (V2.8)**
+16. **Multi-Select Prescription Fill (V2.8):** Active prescription cards in `prescriptions.html` are now individually selectable (tap to tick). A circular checkbox on each card fills blue on selection; the card border highlights. When ≥1 card is selected, a dark bulk action bar slides in above the footer showing "Ready to fill — X Prescriptions" with a single "Fill at Pharmacy →" CTA, routing the whole batch to `pharmacy.html` in one trip. A "Select All / Deselect All" toggle in the header header handles the common case of filling all active prescriptions at once. Individual "Fill at Pharmacy →" inline CTAs remain on each card as a single-item fast path (tap stops propagation so it bypasses the selection toggle). Filled and expired cards are not selectable.
 
 ### **5. Next Steps for Development**
 *   **JavaScript Layer:** Implement session persistence and dynamic ticket updates.

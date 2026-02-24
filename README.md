@@ -1,4 +1,4 @@
-# Clinic Flow App Specification V2.2
+# Clinic Flow App Specification V2.7
 
 ## **1\. Project Philosophy & Core Logic**
 
@@ -97,6 +97,7 @@
   * *Update:* The Log Out tile was replaced with a new **Test Results** tile to give users instant access to their lab reports directly from the home screen grid.
   * *V2.3 Update:* The **Directions** dashboard tile was replaced with **Clinical Tests**. Directions is a one-time-use feature already embedded in the Check In flow (static map). Clinical Tests is a recurring post-consultation need. The 4 tiles now map to the full patient lifecycle: **Check In → Appointments → Clinical Tests → Test Results**.
   * *V2.4 Note:* **Directions access is contextual, not global.** It surfaces in two places where it is actually needed: (1) the **Appointment** footer — after confirming/saving a booking, so the user can immediately navigate to the clinic; (2) the **Check In** flow — for day-of wayfinding. Removing it from the dashboard was correct; it is a low-frequency utility that belongs at the point of need, not prime real estate.
+  * *V2.7 Update:* Dashboard tiles restructured to reflect the centralized appointment-first navigation model. **Clinical Tests** and **Test Results** removed as standalone tiles — they are now reached exclusively through appointment cards. **"Book Appt"** tile links directly to `appointments.html#for-whom`, opening the "Who is this for?" sheet immediately (skipping the list). **Prescriptions** replaces Clinical Tests. **My Queue** replaces Test Results. New tile map: **Check In · Book Appt · Prescriptions · My Queue**.
 * **Screen 1.2: The "Safety Gate" (Scope Cut)**  
   * *Original:* "Flashlight toggle" and "Call Ambulance".  
   * *Critique:* Accessing the flashlight requires camera permission handling and hardware testing.  
@@ -106,9 +107,11 @@
   * *Logic:* Accessed via the Dashboard replacing the redundant Log Out button.
   * *Display:* Displays a chronological list of test results, lab reports, and prescriptions. Tags clearly demarcate statuses such as 'Available' vs 'Pending'.
   * *V2.3 Update:* Added a **Pending Clinical Tests** shortcut banner at the top that links to Screen 1.5 — closing the loop between ordered tests and received results without requiring navigation back to the dashboard.
+  * *V2.7 Update:* Back navigation now returns to `clinical-tests.html` (not the dashboard). Context header updated to show the appointment context (doctor name + "Appointments"), making it clear which appointment's results are displayed. Reports is now the **third screen** in the Appointments → Clinical Tests → Test Results chain.
 * **Screen 1.5: Clinical Tests (New — V2.3)**
   * *Rationale:* After a consultation, patients have two distinct needs — tracking what tests were ordered (and where to go give a sample) vs. viewing completed results. These were previously conflated. Separating them reduces cognitive load and better serves each moment in the patient journey.
   * *Stakeholder Logic:* "Lazy Thumb" — all data (doctor name, date, location, prep note) is pre-populated from the system. Zero input required from the patient.
+  * *V2.7 Update:* Back navigation now returns to `appointments.html`. Context header updated from the generic "My Health" to the specific appointment (e.g. "Dr. Sarah Lim · Feb 26"), making it immediately clear which appointment's tests are being viewed. Clinical Tests is now the **second screen** in the Appointments → Clinical Tests → Test Results chain.
   * *Display:*
     * **Summary banner:** Active count, Processing count, Ready count.
     * **Active test cards:** test name, ordering doctor, status badge, visual 4-step pipeline stepper (Ordered → Sample → Processing → Ready), preparation instructions (fasting / no prep callout), clinic location chip, and a Get Directions CTA.
@@ -144,9 +147,10 @@
   * *Benefit:* **Saves 40+ hours of dev time.** No polling, no conditional locking logic.  
 * **Screen 2.3: Navigation**  
   * *Agreed:* Keep the "Static Map". Do not implement interactive maps.
-* **Screen 2.4: Prescriptions (V2.6 Update)**
+* **Screen 2.4: Prescriptions (V2.8 Update)**
   * *Logic:* The bottom nav "Pharmacy" tab has been replaced with "Rx" (Prescriptions). This enforces the **"Lazy Thumb" rule** — patients no longer browse a generic pharmacy; instead they tap a prescription and it routes directly to the pharmacy with context pre-loaded. A "Browse All Pharmacies" secondary CTA in the prescriptions footer covers the OTC use case.
-  * *Display:* List of prescriptions grouped as Active / Past. Each card shows medication name, dosage, prescribing doctor, issue date, expiry, and status badge (Active / Filled / Expired). Tapping any card navigates to `pharmacy.html`.
+  * *V2.8 — Multi-Select Batch Fill:* Active prescription cards now have an always-visible circular checkbox. Tapping a card toggles its selected state (blue border + checkbox fill). A "Select All / Deselect All" toggle in the header handles the common all-at-once case. When ≥1 card is ticked, a dark action bar appears above the footer showing "Ready to fill — X Prescriptions" and a single "Fill at Pharmacy →" CTA, routing the whole batch in one trip. Individual inline "Fill at Pharmacy →" buttons remain on each card as a single-item shortcut (tap bypasses card selection). Filled and expired cards are not selectable.
+  * *Display:* List of prescriptions grouped as Active / Past. Each active card shows medication name, dosage, prescribing doctor, issue date, expiry, status badge, and a checkbox. Tapping the inline CTA navigates directly to `pharmacy.html`.
   * *Pharmacy:* Still fully functional as `pharmacy.html`; now reached contextually from prescriptions rather than sitting as a primary tab.
 
 ## **5\. Wireframe Flow 3: The Admin Dashboard**
@@ -230,13 +234,13 @@ clinic-flow/
   - Admin path (PIN entry)
 
 #### **Patient Journey (§3)**
-- **Screen 1.1:** Patient Dashboard — tiles: Check In · Appointments · Clinical Tests · Test Results
+- **Screen 1.1:** Patient Dashboard — tiles: Check In · Book Appt · Prescriptions · My Queue *(V2.7 updated)*
 - **Screen 1.0:** Quick Diagnostic Assessment (triage questionnaire)
-- **Screen 1.0a:** Appointment List (`appointments.html` — **V2.6 NEW**) — history view of all appointments (Upcoming / Past), each tappable. Footer "New Appointment" button triggers a CSS `:target` bottom-sheet asking "Who is this for?" (Myself / Someone Else) before routing to the booking form. Flow: `appointments.html` → For Whom sheet → `appointment.html`.
+- **Screen 1.0a:** Appointment List (`appointments.html` — **V2.6 NEW**) — history view of all appointments (Upcoming / Past / Cancelled). Each completed/upcoming appointment card contains inline action buttons linking to that appointment's Clinical Tests and/or Test Results. Footer "New Appointment" CTA triggers the For Whom bottom-sheet. *(V2.7: "Book Appt" dashboard tile now links directly to `appointments.html#for-whom`, bypassing the list and opening the sheet immediately.)*
 - **Screen 1.0b:** Post-Booking Quick Assessment (`quick-assessment.html` — **V2.5 NEW**) — captures symptom changes and prep notes immediately after appointment confirmation, before returning to dashboard. Flow: `appointment.html` → `quick-assessment.html` → `dashboard.html`.
 - **Screen 1.2:** Emergency Hotline (📞 Call 999)
-- **Screen 1.4:** Medical Reports (completed results, prescriptions) — includes shortcut banner to Screen 1.5
-- **Screen 1.5:** Clinical Tests (ordered test pipeline tracker — Ordered → Sample → Processing → Ready) ✅ **NEW**
+- **Screen 1.4:** Medical Reports (completed results, prescriptions) — back nav → `clinical-tests.html`; header shows appointment context *(V2.7 updated)*
+- **Screen 1.5:** Clinical Tests (ordered test pipeline tracker — Ordered → Sample → Processing → Ready) — back nav → `appointments.html`; header shows appointment context *(V2.7 updated)*
 - **Screen 1.6:** Queue Display (load-balanced by count)
 - **Screen 2.1:** Running Late Modal (swap with next)
 - **Screen 2.2:** Arrival Check-In (honor system unlock)
@@ -292,6 +296,14 @@ The prototype uses CSS `:target` for navigation—clicking links with `href="#sc
 ✅ Intelligent adaptive spacing across all breakpoints
 ✅ Premium shadow effects for depth perception
 ✅ Safe-area awareness for notch devices
+
+### **Key Improvements Applied (V2.7)**
+
+13. **Appointment-Contextual Navigation Chain (V2.7):** Clinical Tests and Test Results are no longer standalone destinations reachable from the dashboard. They are now exclusively accessed *through* an appointment card, establishing a clear parent–child hierarchy: **Appointments → Clinical Tests → Test Results**. Each appointment card displays inline action buttons (orange "Clinical Tests" and/or green "Test Results") that are contextually shown only when relevant (e.g., no actions on cancelled appointments). Back navigation and context headers throughout the chain reinforce which appointment the user is viewing.
+
+14. **Dashboard Tile Restructure (V2.7):** The four dashboard quick-action tiles have been realigned to reflect the new navigation model. "Clinical Tests" and "Test Results" are retired as direct tiles (they are now appointment-scoped). **"Book Appt"** (purple, calendar+plus icon) replaces "Appointments" and links directly to `appointments.html#for-whom` — opening the "Who is this for?" sheet immediately rather than showing the history list first. **"Prescriptions"** (orange) replaces Clinical Tests as a recurring post-consultation shortcut. **"My Queue"** (green) replaces Test Results for quick live status access.
+
+15. **Direct-to-Sheet Booking Shortcut (V2.7):** The dashboard "Book Appt" tile bypasses the appointment history list and opens the "Who is this for?" bottom-sheet directly (`appointments.html#for-whom`). This shaves one tap off the most common creation flow while keeping the history list accessible via the bottom nav Appts tab.
 
 ### **Key Improvements Applied (V2.6)**
 
