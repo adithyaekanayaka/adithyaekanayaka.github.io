@@ -32,9 +32,12 @@ graph TD
         
         CheckIn[checkin.html]:::completed
         Directions[directions.html]:::completed
-        Appts[appointment.html]:::completed
+        ApptList[appointments.html<br/>Appointment List]:::completed
+        ForWhom["For Whom?<br/>(CSS :target sheet)"]:::completed
+        Appts[appointment.html<br/>Book Appointment]:::completed
         ApptDirections["Directions CTA<br/>(post-booking)"]:::completed
         QuickAssess["Quick Assessment<br/>(post-booking)"]:::logic
+        Rx[prescriptions.html<br/>Prescriptions]:::completed
         ClinTests[clinical-tests.html<br/>Clinical Tests]:::completed
         Reports[reports.html<br/>Test Results]:::completed
         Pharm[pharmacy.html]:::completed
@@ -67,10 +70,12 @@ graph TD
     Role -->|Staff/Admin| SPhone --> SOTP --> AdminD
     
     Diag --> Dash
-    Dash --> CheckIn & Appts & ClinTests & Reports & Pharm & Profile
+    Dash --> CheckIn & ApptList & ClinTests & Reports & Rx & Profile
     CheckIn -.-> Directions
+    ApptList --> ForWhom --> Appts
     Appts --> QuickAssess --> Dash
     Appts -.-> ApptDirections
+    Rx --> Pharm
     ApptDirections --> Directions
     
     ClinTests -->|View Result| Reports
@@ -128,6 +133,8 @@ graph TD
 | **Triage (Diagnosis)** | ✅ **Done** | **"The System Decisions":** Specialist matching based on symptom selection. |
 | **Patient Dashboard** | ✅ **Done** | **"Lazy Thumb":** Directions tile replaced by Clinical Tests — maps full patient lifecycle. |
 | **Contextual Directions** | ✅ **Done (V2.4)** | **"Right Place":** Directions CTA added to `appointment.html` footer so wayfinding appears at the moment of booking, not on the dashboard. |
+| **Appointments List** | ✅ **Done (V2.6)** | **"Right Start":** `appointments.html` shows full history. "New Appointment" CTA triggers For Whom sheet before routing to booking form. |
+| **Prescriptions Nav** | ✅ **Done (V2.6)** | **"Lazy Thumb":** Pharmacy replaced in bottom nav by Rx. Tap a prescription → pharmacy.html pre-loaded. OTC access via "Browse All" footer CTA. |
 | **Post-Booking Assessment** | 🔷 **Logic Defined (V2.5)** | **"Close the Loop":** Quick Assessment step inserted after appointment confirmation — captures any updated symptoms or prep requirements before returning patient to dashboard. |
 | **Clinical Tests** | ✅ **Done** | **"Zero Input":** All test data (doctor, location, prep) pre-filled. 4-step visual pipeline. Cross-links to Test Results. |
 | **Queue Management** | ✅ **Done** | **"Honor System":** Arrival check-in is intentional/user-driven to save dev time. |
@@ -148,6 +155,10 @@ graph TD
 
 ### **Key Improvements Applied (V2.4)**
 9.  **Contextual Directions Access (V2.4):** Directions removed from dashboard (wrong frequency) but re-surfaced contextually in `appointment.html` footer. The user sees a "Get Directions to Clinic" CTA immediately after confirming or saving a booking — the only moment they genuinely need wayfinding. Check-In retains its own directions link for day-of use. Right feature, right place.
+
+### **Key Improvements Applied (V2.6)**
+11. **Appointments List + For Whom (V2.6):** New `appointments.html` serves as the Appointments entry point — shows history (Upcoming / Past / Cancelled) and a "New Appointment" CTA that triggers a CSS `:target` bottom-sheet asking who the appointment is for before routing to the booking form. `appointment.html` back nav now returns to `appointments.html`.
+12. **Prescriptions Replace Pharmacy in Nav (V2.6):** Bottom nav tab changed from Pharmacy → Rx (`prescriptions.html`). Pharmacy is now a fulfilment destination reached contextually from a prescription card (tap → `pharmacy.html`). A "Browse All Pharmacies" footer CTA preserves OTC access.
 
 ### **Key Improvements Applied (V2.5)**
 10. **Post-Booking Quick Assessment (V2.5):** A lightweight assessment step is inserted immediately after an appointment is created. This captures any symptom updates or preparation requirements while the context is fresh, then returns the patient to the dashboard. Flow: `appointment.html` → Quick Assessment → `dashboard.html`. Prevents the gap where a patient books an appointment but no updated clinical context is recorded until the visit day.

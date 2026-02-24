@@ -144,9 +144,10 @@
   * *Benefit:* **Saves 40+ hours of dev time.** No polling, no conditional locking logic.  
 * **Screen 2.3: Navigation**  
   * *Agreed:* Keep the "Static Map". Do not implement interactive maps.
-* **Screen 2.4: Pharmacy Delivery (New)**
-  * *Logic:* Added a dedicated Pharmacy Delivery page to the bottom navigation, replacing the Queue tab to reduce redundancy (as Queue and Directions were already easily accessible via the Dashboard).
-  * *Display:* Shows a map of nearby pharmacies with delivery distance, duration, and price, enabling patients to easily request home medicine delivery.
+* **Screen 2.4: Prescriptions (V2.6 Update)**
+  * *Logic:* The bottom nav "Pharmacy" tab has been replaced with "Rx" (Prescriptions). This enforces the **"Lazy Thumb" rule** — patients no longer browse a generic pharmacy; instead they tap a prescription and it routes directly to the pharmacy with context pre-loaded. A "Browse All Pharmacies" secondary CTA in the prescriptions footer covers the OTC use case.
+  * *Display:* List of prescriptions grouped as Active / Past. Each card shows medication name, dosage, prescribing doctor, issue date, expiry, and status badge (Active / Filled / Expired). Tapping any card navigates to `pharmacy.html`.
+  * *Pharmacy:* Still fully functional as `pharmacy.html`; now reached contextually from prescriptions rather than sitting as a primary tab.
 
 ## **5\. Wireframe Flow 3: The Admin Dashboard**
 
@@ -199,7 +200,9 @@ clinic-flow/
 ├── dashboard.html              # Patient dashboard
 ├── checkin.html                # Arrival check-in
 ├── queue.html                  # Live queue status
-├── appointment.html            # Book appointment
+├── appointments.html           # Appointment history list + "For Whom" modal (NEW — V2.6)
+├── appointment.html            # Book appointment (reached from appointments.html)
+├── prescriptions.html          # Prescription list → tap to fill at pharmacy (NEW — V2.6)
 ├── quick-assessment.html       # Post-booking quick assessment (NEW — V2.5)
 ├── clinical-tests.html         # Clinical test orders & pipeline tracker (NEW)
 ├── reports.html                # Completed test results & prescriptions
@@ -229,6 +232,7 @@ clinic-flow/
 #### **Patient Journey (§3)**
 - **Screen 1.1:** Patient Dashboard — tiles: Check In · Appointments · Clinical Tests · Test Results
 - **Screen 1.0:** Quick Diagnostic Assessment (triage questionnaire)
+- **Screen 1.0a:** Appointment List (`appointments.html` — **V2.6 NEW**) — history view of all appointments (Upcoming / Past), each tappable. Footer "New Appointment" button triggers a CSS `:target` bottom-sheet asking "Who is this for?" (Myself / Someone Else) before routing to the booking form. Flow: `appointments.html` → For Whom sheet → `appointment.html`.
 - **Screen 1.0b:** Post-Booking Quick Assessment (`quick-assessment.html` — **V2.5 NEW**) — captures symptom changes and prep notes immediately after appointment confirmation, before returning to dashboard. Flow: `appointment.html` → `quick-assessment.html` → `dashboard.html`.
 - **Screen 1.2:** Emergency Hotline (📞 Call 999)
 - **Screen 1.4:** Medical Reports (completed results, prescriptions) — includes shortcut banner to Screen 1.5
@@ -288,6 +292,12 @@ The prototype uses CSS `:target` for navigation—clicking links with `href="#sc
 ✅ Intelligent adaptive spacing across all breakpoints
 ✅ Premium shadow effects for depth perception
 ✅ Safe-area awareness for notch devices
+
+### **Key Improvements Applied (V2.6)**
+
+11. **Appointments List + For Whom Flow (V2.6):** The "Appointments" dashboard tile and nav tab now route to `appointments.html` — a chronological appointment history (Upcoming / Past / Cancelled). The "New Appointment" button triggers a CSS `:target` bottom-sheet that first asks "Who is this for?" (Myself — no typing, or Someone Else — fills in their details). This removes the contextless cold-start of the previous direct-to-form routing.
+
+12. **Prescriptions Replace Pharmacy in Nav (V2.6):** The bottom nav "Pharmacy" tab is replaced with "Rx" (Prescriptions). Prescriptions is a recurring post-consultation need; Pharmacy is a fulfilment destination reached *from* a prescription. Flow: `prescriptions.html` → tap card → `pharmacy.html`. A "Browse All Pharmacies" CTA in the prescriptions footer preserves OTC access without polluting prime nav real estate.
 
 ### **Key Improvements Applied (V2.5)**
 
