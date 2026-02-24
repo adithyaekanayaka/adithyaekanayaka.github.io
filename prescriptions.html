@@ -210,6 +210,42 @@
       font-size: 13px; font-weight: 700; color: var(--blue);
     }
 
+    /* ── Multi-item prescription ── */
+    .rx-item-count {
+      font-size: 11px; font-weight: 800;
+      padding: 3px 8px; border-radius: 20px;
+      background: rgba(175,82,222,.10); color: var(--purple);
+      white-space: nowrap; flex-shrink: 0;
+      align-self: flex-start; margin-top: 2px;
+    }
+
+    .rx-items-list {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .rx-card.selected .rx-items-list {
+      background: rgba(26,107,255,.04);
+      border-color: rgba(26,107,255,.15);
+    }
+
+    .rx-item-row {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .rx-item-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--purple); flex-shrink: 0;
+    }
+    .rx-item-name {
+      font-size: 13px; font-weight: 700; color: var(--text-h); flex: 1; min-width: 0;
+    }
+    .rx-item-sig {
+      font-size: 11px; color: var(--text-m); white-space: nowrap;
+    }
+
     /* ── Selectable card state ── */
     .rx-card.selectable { cursor: pointer; user-select: none; }
 
@@ -399,6 +435,65 @@
         </button>
       </div>
 
+      <!-- Multi-item active prescription: H. pylori triple therapy pack -->
+      <div class="rx-card selectable" id="rx-pack" onclick="toggleRx('rx-pack')">
+        <div class="rx-card-top">
+          <div class="rx-select-check">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="rx-icon rx-icon--active" style="background:rgba(175,82,222,.10);color:var(--purple);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-5M9 21H5a2 2 0 0 1-2-2v-5m0 0h18"/>
+            </svg>
+          </div>
+          <div class="rx-meta">
+            <div class="rx-name">H. pylori Treatment Pack</div>
+            <div class="rx-dosage">Triple therapy · 14 days</div>
+          </div>
+          <span class="rx-item-count">3 items</span>
+        </div>
+        <!-- Inline item breakdown -->
+        <div class="rx-items-list">
+          <div class="rx-item-row">
+            <div class="rx-item-dot"></div>
+            <span class="rx-item-name">Amoxicillin 1000mg</span>
+            <span class="rx-item-sig">2× daily</span>
+          </div>
+          <div class="rx-item-row">
+            <div class="rx-item-dot"></div>
+            <span class="rx-item-name">Clarithromycin 500mg</span>
+            <span class="rx-item-sig">2× daily</span>
+          </div>
+          <div class="rx-item-row">
+            <div class="rx-item-dot"></div>
+            <span class="rx-item-name">Omeprazole 20mg</span>
+            <span class="rx-item-sig">1× daily</span>
+          </div>
+        </div>
+        <div class="rx-details">
+          <div class="rx-detail-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Dr. Raj Kumar
+          </div>
+          <div class="rx-detail-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+            Issued 24 Feb 2026
+          </div>
+          <div class="rx-detail-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            Expires 10 Mar 2026
+          </div>
+        </div>
+        <div class="rx-refill-notice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16v.5"/></svg>
+          New prescription — not yet filled
+        </div>
+        <button class="rx-fill-cta-btn" onclick="event.stopPropagation(); window.location.href='pharmacy.html'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M10 9h6M13 6v6"/></svg>
+          Fill at Pharmacy →
+        </button>
+      </div>
+
       <!-- ── Past ── -->
       <p class="section-label">Past</p>
 
@@ -431,6 +526,51 @@
           <div class="rx-detail-item">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             Central Medicare
+          </div>
+        </div>
+      </a>
+
+      <!-- Past multi-item: Diabetic management bundle (filled) -->
+      <a class="rx-card" href="pharmacy.html">
+        <div class="rx-card-top">
+          <div class="rx-icon rx-icon--filled" style="background:rgba(52,199,89,.10);color:var(--green);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-5M9 21H5a2 2 0 0 1-2-2v-5m0 0h18"/>
+            </svg>
+          </div>
+          <div class="rx-meta">
+            <div class="rx-name">Diabetic Management Bundle</div>
+            <div class="rx-dosage">2 medications · ongoing</div>
+          </div>
+          <span class="rx-badge badge-filled">Filled</span>
+          <svg class="rx-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="rx-items-list">
+          <div class="rx-item-row">
+            <div class="rx-item-dot" style="background:var(--green);"></div>
+            <span class="rx-item-name">Metformin 500mg</span>
+            <span class="rx-item-sig">2× daily</span>
+          </div>
+          <div class="rx-item-row">
+            <div class="rx-item-dot" style="background:var(--green);"></div>
+            <span class="rx-item-name">Aspirin 100mg</span>
+            <span class="rx-item-sig">once daily</span>
+          </div>
+        </div>
+        <div class="rx-details">
+          <div class="rx-detail-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Dr. Aiden Park
+          </div>
+          <div class="rx-detail-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+            Issued 20 Jan 2026
+          </div>
+          <div class="rx-detail-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            LifeCare Plus
           </div>
         </div>
       </a>
@@ -526,7 +666,7 @@
   </div>
 
   <script>
-    const ACTIVE_IDS = ['rx-amox', 'rx-para'];
+    const ACTIVE_IDS = ['rx-amox', 'rx-para', 'rx-pack'];
     const selected = new Set();
 
     function toggleRx(id) {
