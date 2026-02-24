@@ -82,8 +82,15 @@
             <span>Dr. Sarah Lim</span>
           </div>
         </div>
-        <div class="queue-actions">
-          <a class="btn-outline" href="modal-late.html">⏱️ Running Late</a>
+        <div class="queue-actions" style="flex-wrap:wrap; gap:8px;">
+          <a class="btn-outline" href="directions.html" style="display:flex; align-items:center; gap:5px; color:var(--orange); border-color:var(--orange); font-size:13px; padding:8px 10px;">
+            <svg width="14" height="14" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <path d="M14 3C9.582 3 6 6.582 6 11c0 6 8 14 8 14s8-8 8-14c0-4.418-3.582-8-8-8z" stroke="currentColor" stroke-width="2.5"/>
+              <circle cx="14" cy="11" r="2.5" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            Directions
+          </a>
+          <a class="btn-outline" href="modal-late.html" style="font-size:13px; padding:8px 10px;">⏱️ Running Late</a>
           <a class="btn-primary-sm" href="checkin.html">I'm at Clinic</a>
         </div>
       </div>
@@ -100,15 +107,16 @@
           <span class="tile-label">Check In</span>
         </a>
 
-        <a class="tile" href="directions.html">
+        <a class="tile" href="clinical-tests.html">
           <div class="tile-icon tile-icon--map">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M14 3C9.582 3 6 6.582 6 11c0 6 8 14 8 14s8-8 8-14c0-4.418-3.582-8-8-8z" stroke="#FF9500"
-                stroke-width="2" />
-              <circle cx="14" cy="11" r="2.5" stroke="#FF9500" stroke-width="1.8" />
+              <path d="M10 3h8" stroke="#FF9500" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 3v8L7.5 18a5 5 0 0 0 4.5 6h4a5 5 0 0 0 4.5-6L15.5 11V3"
+                stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 17h8" stroke="#FF9500" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
-          <span class="tile-label">Directions</span>
+          <span class="tile-label">Clinical Tests</span>
         </a>
 
         <a class="tile" href="appointment.html">

@@ -33,6 +33,8 @@ graph TD
         CheckIn[checkin.html]:::completed
         Directions[directions.html]:::completed
         Appts[appointment.html]:::completed
+        ApptDirections["Directions CTA<br/>(post-booking)"]:::completed
+        ClinTests[clinical-tests.html<br/>Clinical Tests]:::completed
         Reports[reports.html<br/>Test Results]:::completed
         Pharm[pharmacy.html]:::completed
         Profile[profile.html]:::completed
@@ -64,7 +66,12 @@ graph TD
     Role -->|Staff/Admin| SPhone --> SOTP --> AdminD
     
     Diag --> Dash
-    Dash --> CheckIn & Directions & Appts & Reports & Pharm & Profile
+    Dash --> CheckIn & Appts & ClinTests & Reports & Pharm & Profile
+    CheckIn -.-> Directions
+    Appts -.-> ApptDirections
+    ApptDirections --> Directions
+    
+    ClinTests -->|View Result| Reports
     
     CheckIn -.-> Honor
     Dash -.-> Late
@@ -94,6 +101,9 @@ graph TD
 #### **Phase 2: Patient Journey (The "Lazy Thumb" Core)**
 *   ✅ **Completed:** Triage questionnaire (`diagnosis.html`), specialist matching logic, and "Test Results" dashboard tile.
 *   ✅ **Completed:** "Honor System" arrival check-in and "Running Late" modals.
+*   ✅ **Completed (V2.3):** `clinical-tests.html` — doctor-ordered test pipeline tracker (Ordered → Sample → Processing → Ready). Covers lab, imaging, and cardiac test categories. Includes preparation instructions, clinic location chips, and a "View Result" CTA that links to `reports.html`.
+*   ✅ **Completed (V2.3):** Dashboard tile restructured — Directions replaced by Clinical Tests. Dashboard now maps to the full patient lifecycle: Check In → Appointments → Clinical Tests → Test Results.
+*   ✅ **Completed (V2.3):** `reports.html` updated with a "Pending Clinical Tests" shortcut banner linking to `clinical-tests.html`.
 *   🚧 **Pending:** Dynamic data binding for live queue counts and actual queue swap algorithm.
 
 #### **Phase 3: Pharmacy, Order & Delivery**
@@ -113,7 +123,9 @@ graph TD
 | **Splash & Role** | ✅ **Done** | Token check logic (simulated) + Role separation. |
 | **Auth (OTP/PIN)** | ✅ **Done** | 2-step phone binding for Patients; Credential binding for Staff. |
 | **Triage (Diagnosis)** | ✅ **Done** | **"The System Decisions":** Specialist matching based on symptom selection. |
-| **Patient Dashboard** | ✅ **Done** | **"Lazy Thumb":** Replaced redundant Log Out with **Test Results** tile. |
+| **Patient Dashboard** | ✅ **Done** | **"Lazy Thumb":** Directions tile replaced by Clinical Tests — maps full patient lifecycle. |
+| **Contextual Directions** | ✅ **Done (V2.4)** | **"Right Place":** Directions CTA added to `appointment.html` footer so wayfinding appears at the moment of booking, not on the dashboard. |
+| **Clinical Tests** | ✅ **Done** | **"Zero Input":** All test data (doctor, location, prep) pre-filled. 4-step visual pipeline. Cross-links to Test Results. |
 | **Queue Management** | ✅ **Done** | **"Honor System":** Arrival check-in is intentional/user-driven to save dev time. |
 | **Admin Controls** | ✅ **Done** | **"Timed Break Mode":** Auto-resumption of queue to prevent human error. |
 | **Pharmacy Delivery** | ✅ **Done** | **Contextual UX:** Replaced Queue tab with Pharmacy for post-consultation needs. |
@@ -124,7 +136,17 @@ graph TD
 3.  **Battery Optimization:** Switched to "Honor System" modals for check-ins to avoid power-hungry server polling.
 4.  **Load Balancing:** Simplified doctor assignment to "Patient Count" rather than "Wait Time" estimation.
 
+### **Key Improvements Applied (V2.3)**
+5.  **Post-Consultation Gap Closed:** Added `clinical-tests.html` to track the full test lifecycle (ordered → sample → processing → ready). Previously, patients had no visibility into tests ordered but not yet resulted.
+6.  **Dashboard Lifecycle Alignment:** Replaced the low-frequency "Directions" dashboard tile with "Clinical Tests". The four tiles now directly map to the four main post-triage actions: **Check In → Appointments → Clinical Tests → Test Results**.
+7.  **Cross-Screen Linking:** `reports.html` now surfaces a "Pending Clinical Tests" banner, and `clinical-tests.html` surfaces a "View Result" CTA — patients can navigate between ordered tests and completed results without returning to the dashboard.
+8.  **Zero-Input Compliance:** The Clinical Tests page shows all data (doctor, date, location, prep requirement) pre-populated, requiring no typing from the patient consistent with the "Lazy Thumb" rule.
+
+### **Key Improvements Applied (V2.4)**
+9.  **Contextual Directions Access (V2.4):** Directions removed from dashboard (wrong frequency) but re-surfaced contextually in `appointment.html` footer. The user sees a "Get Directions to Clinic" CTA immediately after confirming or saving a booking — the only moment they genuinely need wayfinding. Check-In retains its own directions link for day-of use. Right feature, right place.
+
 ### **5. Next Steps for Development**
 *   **JavaScript Layer:** Implement session persistence and dynamic ticket updates.
-*   **State Management:** Link triage results to dashboard UI.
+*   **State Management:** Link triage results to dashboard UI; bind clinical test orders from doctor's consultation to patient view.
 *   **Live Maps:** Enhance pharmacy delivery with real-time location data.
+*   **Push Notifications:** Notify patient when a test result changes status to "Ready".

@@ -95,6 +95,8 @@
 * **Screen 1.1: Dashboard (Refined)**
   * *Logic Simplification:* The "Log Out" tile on the dashboard was redundant since the "Profile" view already has a dedicated "Sign Out" button.
   * *Update:* The Log Out tile was replaced with a new **Test Results** tile to give users instant access to their lab reports directly from the home screen grid.
+  * *V2.3 Update:* The **Directions** dashboard tile was replaced with **Clinical Tests**. Directions is a one-time-use feature already embedded in the Check In flow (static map). Clinical Tests is a recurring post-consultation need. The 4 tiles now map to the full patient lifecycle: **Check In → Appointments → Clinical Tests → Test Results**.
+  * *V2.4 Note:* **Directions access is contextual, not global.** It surfaces in two places where it is actually needed: (1) the **Appointment** footer — after confirming/saving a booking, so the user can immediately navigate to the clinic; (2) the **Check In** flow — for day-of wayfinding. Removing it from the dashboard was correct; it is a low-frequency utility that belongs at the point of need, not prime real estate.
 * **Screen 1.2: The "Safety Gate" (Scope Cut)**  
   * *Original:* "Flashlight toggle" and "Call Ambulance".  
   * *Critique:* Accessing the flashlight requires camera permission handling and hardware testing.  
@@ -103,6 +105,20 @@
 * **Screen 1.4: Medical Reports (New)**
   * *Logic:* Accessed via the Dashboard replacing the redundant Log Out button.
   * *Display:* Displays a chronological list of test results, lab reports, and prescriptions. Tags clearly demarcate statuses such as 'Available' vs 'Pending'.
+  * *V2.3 Update:* Added a **Pending Clinical Tests** shortcut banner at the top that links to Screen 1.5 — closing the loop between ordered tests and received results without requiring navigation back to the dashboard.
+* **Screen 1.5: Clinical Tests (New — V2.3)**
+  * *Rationale:* After a consultation, patients have two distinct needs — tracking what tests were ordered (and where to go give a sample) vs. viewing completed results. These were previously conflated. Separating them reduces cognitive load and better serves each moment in the patient journey.
+  * *Stakeholder Logic:* "Lazy Thumb" — all data (doctor name, date, location, prep note) is pre-populated from the system. Zero input required from the patient.
+  * *Display:*
+    * **Summary banner:** Active count, Processing count, Ready count.
+    * **Active test cards:** test name, ordering doctor, status badge, visual 4-step pipeline stepper (Ordered → Sample → Processing → Ready), preparation instructions (fasting / no prep callout), clinic location chip, and a Get Directions CTA.
+    * **Completed test cards:** same layout, all pipeline steps green, CTA changes to "View Result" → `reports.html`.
+  * *Test Categories:*
+    * **Lab (Blood):** CBC, HbA1c — blue icon, Lab Floor 1
+    * **Cardiac:** 12-Lead ECG — red icon, Cardiology Floor 2
+    * **Imaging:** Chest X-Ray — purple icon, Radiology Floor 3
+  * *Pipeline States:* Ordered · Scheduled · Awaiting Sample · Processing · Ready
+  * *Prep Logic:* Orange callout = fasting or restriction required. Green callout = no special prep.
 * **Screen 1.6: Doctor Allocation (Logic Simplification)**  
   * *Original:* "Based on lowest wait time".  
   * *Critique:* Calculating "Time" is mathematically complex for an MVP.  
@@ -172,10 +188,31 @@
 ### **File Structure**
 ```
 clinic-flow/
-├── index.html              # Complete prototype with all screens and modals
-├── styles.css              # Design system, components, and responsive styles
-├── README.md               # This specification and implementation guide
-└── .git/                   # Version control
+├── index.html                  # Splash screen
+├── role.html                   # Role selection
+├── phone-patient.html          # Patient phone entry
+├── phone-staff.html            # Staff phone entry
+├── phone-admin.html            # Admin phone entry
+├── otp-patient.html            # Patient OTP verification
+├── otp-staff.html              # Staff OTP verification
+├── diagnosis.html              # Quick triage assessment
+├── dashboard.html              # Patient dashboard
+├── checkin.html                # Arrival check-in
+├── queue.html                  # Live queue status
+├── appointment.html            # Book appointment
+├── clinical-tests.html         # Clinical test orders & pipeline tracker (NEW)
+├── reports.html                # Completed test results & prescriptions
+├── pharmacy.html               # Pharmacy delivery browser
+├── order-confirmation.html     # Order confirmation
+├── order-delivery.html         # Delivery tracking
+├── directions.html             # Static clinic map
+├── profile.html                # Patient profile & sign out
+├── modal-late.html             # Running late modal
+├── modal-arrival.html          # Arrival honor system modal
+├── admin.html                  # Admin/Staff dashboard
+├── modal-break.html            # Doctor break timer modal
+├── styles.css                  # Design system, components, responsive styles
+└── README.md                   # This specification and implementation guide
 ```
 
 ### **Screens Implemented**
@@ -189,15 +226,16 @@ clinic-flow/
   - Admin path (PIN entry)
 
 #### **Patient Journey (§3)**
-- **Screen 1.1:** Patient Dashboard (home with queue status)
+- **Screen 1.1:** Patient Dashboard — tiles: Check In · Appointments · Clinical Tests · Test Results
 - **Screen 1.0:** Quick Diagnostic Assessment (triage questionnaire)
-- **Screen 1.2:** Emergency Hotline (🏥 Call 999)
-- **Screen 1.4:** Medical Reports (Test results and history)
-- **Screen 1.6:** Queue Display (Load-balanced by count)
-- **Screen 2.1:** Running Late Modal (Swap with next)
-- **Screen 2.2:** Arrival Check-In (Honor system unlock)
-- **Screen 2.3:** Static Map (Clinic location)
-- **Screen 2.4:** Pharmacy Delivery (Home medicine delivery map)
+- **Screen 1.2:** Emergency Hotline (📞 Call 999)
+- **Screen 1.4:** Medical Reports (completed results, prescriptions) — includes shortcut banner to Screen 1.5
+- **Screen 1.5:** Clinical Tests (ordered test pipeline tracker — Ordered → Sample → Processing → Ready) ✅ **NEW**
+- **Screen 1.6:** Queue Display (load-balanced by count)
+- **Screen 2.1:** Running Late Modal (swap with next)
+- **Screen 2.2:** Arrival Check-In (honor system unlock)
+- **Screen 2.3:** Static Map (clinic location, embedded in Check In)
+- **Screen 2.4:** Pharmacy Delivery (home medicine delivery map)
 
 #### **Admin Dashboard (§5)**
 - **Screen 3.1:** Active Doctors & Triage Queue
