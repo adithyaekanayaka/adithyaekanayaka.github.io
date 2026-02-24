@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Clinic Flow · Quick Assessment</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .booking-confirm-banner {
+      background: linear-gradient(160deg, rgba(52,199,89,.14) 0%, rgba(52,199,89,.05) 100%);
+      border: 1px solid rgba(52,199,89,.3);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .booking-confirm-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(52,199,89,.15);
+      color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .booking-confirm-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-bottom: 3px;
+    }
+    .booking-confirm-sub {
+      font-size: 13px;
+      color: var(--text-m);
+      line-height: 1.5;
+    }
+    .booking-confirm-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .booking-meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-b);
+    }
+
+    .assoc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .assoc-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      user-select: none;
+    }
+    .assoc-item:active { transform: scale(.98); }
+    .assoc-checkbox { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
+    .assoc-box {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .assoc-checkbox:checked ~ .assoc-box {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    .assoc-checkbox:checked ~ .assoc-box::after {
+      content: '';
+      display: block;
+      width: 4px; height: 8px;
+      border: 2px solid #fff;
+      border-top: none; border-left: none;
+      transform: rotate(45deg) translate(-1px,-1px);
+    }
+    .assoc-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-b);
+      line-height: 1.3;
+    }
+    label.assoc-item:has(.assoc-checkbox:checked) {
+      border-color: var(--blue);
+      background: var(--blue-lt);
+    }
+    label.assoc-item:has(.assoc-checkbox:checked) .assoc-label {
+      color: var(--blue);
+    }
+
+    .prep-textarea {
+      width: 100%;
+      min-height: 72px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-h);
+      resize: vertical;
+      font-family: inherit;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+    .prep-textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+    .prep-textarea::placeholder {
+      color: var(--text-m);
+      font-weight: 500;
+    }
+
+    .skip-link {
+      display: block;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-m);
+      padding: 14px;
+      text-decoration: none;
+    }
+    .skip-link:active { opacity: .6; }
+  </style>
+</head>
+<body>
+
+  <div class="screen" id="screen-quick-assessment" style="display:flex;">
+
+    <div class="screen-header with-back">
+      <a class="btn-back" href="appointment.html" aria-label="Back">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <span class="header-title">Quick Assessment</span>
+      <span class="header-step" style="margin-left:auto; font-size:12px; font-weight:700; color:var(--text-m);">Post-Booking</span>
+    </div>
+
+    <div class="screen-body" style="display:flex; flex-direction:column; gap:16px;">
+
+      <!-- Booking confirmed banner -->
+      <div class="booking-confirm-banner">
+        <div class="booking-confirm-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="booking-confirm-title">Appointment confirmed</div>
+          <div class="booking-confirm-sub">One last step — help your doctor prepare.</div>
+          <div class="booking-meta-pills">
+            <div class="booking-confirm-meta">
+              <span class="booking-meta-pill">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M16 3v4M8 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Today · 09:00
+              </span>
+              <span class="booking-meta-pill">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Dr. Silva (GP)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal notice -->
+      <div class="diagnosis-notice">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9 6v4M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span><b>Note:</b> This is for triage only and does not replace a medical diagnosis.</span>
+      </div>
+
+      <!-- Section 1: Any changes since booking? -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:6px;">Any changes since booking?</h3>
+        <p class="diagnosis-section-sub" style="margin-top:0; margin-bottom:10px;">Tap all that apply — or skip if nothing changed.</p>
+
+        <div class="assoc-grid">
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="changes" value="symptoms_worse">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Symptoms got worse</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="changes" value="new_symptom">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">New symptom appeared</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="changes" value="took_meds">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Took new medication</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="changes" value="symptoms_better">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Feeling better now</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="changes" value="fever">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Developed fever</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="changes" value="no_change">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">No change</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 2: Associated symptoms -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:6px;">Associated symptoms</h3>
+        <p class="diagnosis-section-sub" style="margin-top:0; margin-bottom:10px;">Tick anything you are experiencing right now.</p>
+
+        <div class="assoc-grid">
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="assoc" value="fatigue">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Fatigue / Weakness</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="assoc" value="appetite">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Loss of appetite</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="assoc" value="chills">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Fever / Chills</span>
+          </label>
+          <label class="assoc-item">
+            <input class="assoc-checkbox" type="checkbox" name="assoc" value="sleep">
+            <span class="assoc-box"></span>
+            <span class="assoc-label">Sleep disturbance</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 3: Prep notes for doctor -->
+      <div class="card" style="padding:16px;">
+        <h3 class="diagnosis-section-title" style="margin-bottom:4px;">Notes for your doctor</h3>
+        <p class="diagnosis-section-sub" style="margin-top:0;">Optional. Any prep details, allergies, or concerns.</p>
+        <textarea class="prep-textarea" name="prep_notes" placeholder="e.g. Currently taking ibuprofen. Allergic to penicillin."></textarea>
+        <p class="diagnosis-hint" style="margin-top:8px;">* Only your assigned doctor can see this.</p>
+      </div>
+
+    </div>
+
+    <div class="screen-footer" style="display:flex; flex-direction:column;">
+      <a class="btn-primary" href="dashboard.html">Done — Go to Dashboard</a>
+      <a class="skip-link" href="dashboard.html">Skip — nothing to add</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

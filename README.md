@@ -200,6 +200,7 @@ clinic-flow/
 ├── checkin.html                # Arrival check-in
 ├── queue.html                  # Live queue status
 ├── appointment.html            # Book appointment
+├── quick-assessment.html       # Post-booking quick assessment (NEW — V2.5)
 ├── clinical-tests.html         # Clinical test orders & pipeline tracker (NEW)
 ├── reports.html                # Completed test results & prescriptions
 ├── pharmacy.html               # Pharmacy delivery browser
@@ -228,6 +229,7 @@ clinic-flow/
 #### **Patient Journey (§3)**
 - **Screen 1.1:** Patient Dashboard — tiles: Check In · Appointments · Clinical Tests · Test Results
 - **Screen 1.0:** Quick Diagnostic Assessment (triage questionnaire)
+- **Screen 1.0b:** Post-Booking Quick Assessment (`quick-assessment.html` — **V2.5 NEW**) — captures symptom changes and prep notes immediately after appointment confirmation, before returning to dashboard. Flow: `appointment.html` → `quick-assessment.html` → `dashboard.html`.
 - **Screen 1.2:** Emergency Hotline (📞 Call 999)
 - **Screen 1.4:** Medical Reports (completed results, prescriptions) — includes shortcut banner to Screen 1.5
 - **Screen 1.5:** Clinical Tests (ordered test pipeline tracker — Ordered → Sample → Processing → Ready) ✅ **NEW**
@@ -286,6 +288,10 @@ The prototype uses CSS `:target` for navigation—clicking links with `href="#sc
 ✅ Intelligent adaptive spacing across all breakpoints
 ✅ Premium shadow effects for depth perception
 ✅ Safe-area awareness for notch devices
+
+### **Key Improvements Applied (V2.5)**
+
+10. **Post-Booking Quick Assessment:** A dedicated lightweight screen (`quick-assessment.html`) is inserted immediately after appointment confirmation. It captures symptom changes, associated symptoms, and doctor prep notes while the context is fresh — all via checkboxes with one optional textarea ("Lazy Thumb" compliant). Patients can complete it in seconds or skip entirely. Flow: `appointment.html` → `quick-assessment.html` → `dashboard.html`. Only the **"Confirm appointment"** button routes through this step; **"Save draft"** goes directly to the dashboard to preserve the quick-draft escape hatch.
 
 ### **Future Enhancements (Post-MVP)**
 

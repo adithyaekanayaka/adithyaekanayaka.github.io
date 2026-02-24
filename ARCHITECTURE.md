@@ -34,6 +34,7 @@ graph TD
         Directions[directions.html]:::completed
         Appts[appointment.html]:::completed
         ApptDirections["Directions CTA<br/>(post-booking)"]:::completed
+        QuickAssess["Quick Assessment<br/>(post-booking)"]:::logic
         ClinTests[clinical-tests.html<br/>Clinical Tests]:::completed
         Reports[reports.html<br/>Test Results]:::completed
         Pharm[pharmacy.html]:::completed
@@ -68,6 +69,7 @@ graph TD
     Diag --> Dash
     Dash --> CheckIn & Appts & ClinTests & Reports & Pharm & Profile
     CheckIn -.-> Directions
+    Appts --> QuickAssess --> Dash
     Appts -.-> ApptDirections
     ApptDirections --> Directions
     
@@ -104,7 +106,8 @@ graph TD
 *   ✅ **Completed (V2.3):** `clinical-tests.html` — doctor-ordered test pipeline tracker (Ordered → Sample → Processing → Ready). Covers lab, imaging, and cardiac test categories. Includes preparation instructions, clinic location chips, and a "View Result" CTA that links to `reports.html`.
 *   ✅ **Completed (V2.3):** Dashboard tile restructured — Directions replaced by Clinical Tests. Dashboard now maps to the full patient lifecycle: Check In → Appointments → Clinical Tests → Test Results.
 *   ✅ **Completed (V2.3):** `reports.html` updated with a "Pending Clinical Tests" shortcut banner linking to `clinical-tests.html`.
-*   🚧 **Pending:** Dynamic data binding for live queue counts and actual queue swap algorithm.
+*   � **Logic Defined (V2.5):** Post-booking Quick Assessment modal — captures symptom changes or prep notes immediately after an appointment is confirmed, then returns to the dashboard.
+*   �🚧 **Pending:** Dynamic data binding for live queue counts and actual queue swap algorithm.
 
 #### **Phase 3: Pharmacy, Order & Delivery**
 *   ✅ **Completed:** Browsing, confirmation, and delivery tracking UI states.
@@ -125,6 +128,7 @@ graph TD
 | **Triage (Diagnosis)** | ✅ **Done** | **"The System Decisions":** Specialist matching based on symptom selection. |
 | **Patient Dashboard** | ✅ **Done** | **"Lazy Thumb":** Directions tile replaced by Clinical Tests — maps full patient lifecycle. |
 | **Contextual Directions** | ✅ **Done (V2.4)** | **"Right Place":** Directions CTA added to `appointment.html` footer so wayfinding appears at the moment of booking, not on the dashboard. |
+| **Post-Booking Assessment** | 🔷 **Logic Defined (V2.5)** | **"Close the Loop":** Quick Assessment step inserted after appointment confirmation — captures any updated symptoms or prep requirements before returning patient to dashboard. |
 | **Clinical Tests** | ✅ **Done** | **"Zero Input":** All test data (doctor, location, prep) pre-filled. 4-step visual pipeline. Cross-links to Test Results. |
 | **Queue Management** | ✅ **Done** | **"Honor System":** Arrival check-in is intentional/user-driven to save dev time. |
 | **Admin Controls** | ✅ **Done** | **"Timed Break Mode":** Auto-resumption of queue to prevent human error. |
@@ -144,6 +148,9 @@ graph TD
 
 ### **Key Improvements Applied (V2.4)**
 9.  **Contextual Directions Access (V2.4):** Directions removed from dashboard (wrong frequency) but re-surfaced contextually in `appointment.html` footer. The user sees a "Get Directions to Clinic" CTA immediately after confirming or saving a booking — the only moment they genuinely need wayfinding. Check-In retains its own directions link for day-of use. Right feature, right place.
+
+### **Key Improvements Applied (V2.5)**
+10. **Post-Booking Quick Assessment (V2.5):** A lightweight assessment step is inserted immediately after an appointment is created. This captures any symptom updates or preparation requirements while the context is fresh, then returns the patient to the dashboard. Flow: `appointment.html` → Quick Assessment → `dashboard.html`. Prevents the gap where a patient books an appointment but no updated clinical context is recorded until the visit day.
 
 ### **5. Next Steps for Development**
 *   **JavaScript Layer:** Implement session persistence and dynamic ticket updates.
