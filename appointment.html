@@ -4,8 +4,222 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Clinic Flow · Appointment</title>
-  <link rel="stylesheet" href="styles.css" />
   <style>
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       CLINIC FLOW · DESIGN SYSTEM (inlined)
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    :root {
+      --blue:      #1A6BFF;
+      --blue-lt:   #EEF3FF;
+      --blue-dark: #0F4FCC;
+      --green:     #34C759;
+      --orange:    #FF9500;
+      --red:       #FF3B30;
+      --purple:    #AF52DE;
+      --bg:        #F2F4F9;
+      --surface:   #FFFFFF;
+      --surface2:  #F7F8FC;
+      --border:    #E4E7EF;
+      --text-h:    #0F1525;
+      --text-b:    #3A4057;
+      --text-m:    #6B7290;
+      --text-lt:   #A0A8C0;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 2px 8px rgba(26,107,255,.08);
+      --shadow-md: 0 6px 24px rgba(26,107,255,.12);
+      --shadow-lg: 0 20px 60px rgba(15,21,37,.30);
+      --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%; width: 100%;
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+    }
+
+    /* ── Screen system ── */
+    /* Display flex always (standalone page — no :target routing) */
+    .screen {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      width: 100%;
+      min-height: 100dvh;
+      background: var(--bg);
+    }
+
+    @media (min-width: 600px) {
+      body {
+        background: linear-gradient(135deg, #1A6BFF 0%, #0F4FCC 45%, #0A3490 100%);
+      }
+      .screen {
+        position: relative;
+        margin: 40px auto;
+        width: min(480px, 95vw);
+        min-height: unset;
+        height: min(900px, 94dvh);
+        border-radius: var(--radius-xl);
+        box-shadow: 0 24px 72px rgba(15,21,37,.35), 0 16px 40px rgba(15,21,37,.18);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .screen { width: min(520px, 90vw); }
+    }
+
+    @media (min-width: 1400px) {
+      .screen { width: min(560px, 85vw); height: min(920px, 92dvh); }
+    }
+
+    /* ── Section padding ── */
+    .screen-header {
+      flex-shrink: 0;
+      padding: max(env(safe-area-inset-top,0px) + 28px, 52px) 20px 12px;
+    }
+    .screen-footer {
+      flex-shrink: 0;
+      padding: 16px 20px max(env(safe-area-inset-bottom,0px) + 12px, 28px);
+    }
+    @media (min-width: 600px) {
+      .screen-header { padding: 28px 28px 12px; }
+      .screen-footer { padding: 16px 28px 28px; }
+    }
+
+    .screen-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 20px 12px;
+    }
+    @media (min-width: 600px) {
+      .screen-body { padding: 8px 28px 12px; }
+    }
+    ::-webkit-scrollbar { width: 0; }
+
+    /* ── Header ── */
+    .screen-header.with-back {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .btn-back {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--surface); border: none; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-h);
+      box-shadow: var(--shadow-sm); text-decoration: none;
+    }
+    .btn-back:active { transform: scale(.95); }
+    .header-title { font-size: 17px; font-weight: 600; color: var(--text-h); }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      width: 100%; padding: 17px;
+      background: var(--blue); color: white;
+      font-size: 16px; font-weight: 600; border: none;
+      border-radius: var(--radius-sm); cursor: pointer;
+      letter-spacing: .2px; font-family: var(--font);
+      text-decoration: none; display: block; text-align: center;
+    }
+    .btn-primary:active { transform: scale(.98); background: var(--blue-dark); }
+
+    .btn-outline {
+      flex: 1; padding: 11px; background: none;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 600; color: var(--text-b);
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; text-align: center;
+    }
+    .btn-outline:active { background: var(--bg); }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface); border-radius: var(--radius-md);
+      padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+
+    /* ── Diagnosis shared styles ── */
+    .diagnosis-notice {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: #FFF5E0; border-radius: var(--radius-sm); padding: 12px 14px;
+      border: 1px solid rgba(255,149,0,.2);
+      font-size: 13px; color: var(--text-b); line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .diagnosis-notice svg {
+      width: 18px; height: 18px; flex-shrink: 0;
+      color: var(--orange); margin-top: 2px;
+    }
+    .diagnosis-section-title {
+      font-size: 15px; font-weight: 700; color: var(--text-h);
+      margin: 0; line-height: 1.3;
+    }
+    .diagnosis-section-sub {
+      font-size: 13px; color: var(--text-m); margin: -6px 0 0 0;
+    }
+    .diagnosis-hint { font-size: 12px; color: var(--text-m); margin-top: -4px; }
+
+    /* Symptom buttons */
+    .symptom-buttons {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .symptom-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 14px 12px; background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); cursor: pointer;
+      font-size: 13px; font-weight: 500; color: var(--text-b);
+      text-align: center; text-decoration: none;
+    }
+    .symptom-btn:active { transform: scale(.95); }
+    input[type="radio"]:checked + .symptom-btn {
+      background: var(--blue-lt); border-color: var(--blue); color: var(--blue);
+    }
+
+    /* Radio options */
+    .radio-options { display: flex; flex-direction: column; gap: 10px; }
+    .radio-option {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; background: var(--surface);
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      cursor: pointer; position: relative;
+    }
+    .radio-option:active { transform: scale(.98); }
+    .radio-custom {
+      width: 20px; height: 20px; border: 2px solid var(--border);
+      border-radius: 50%; flex-shrink: 0; position: relative;
+    }
+    .radio-label { font-size: 14px; color: var(--text-b); flex: 1; }
+    input[type="radio"]:checked + .radio-custom {
+      border-color: var(--blue); background: var(--blue);
+    }
+    input[type="radio"]:checked + .radio-custom::after {
+      content: ''; position: absolute;
+      width: 6px; height: 10px; border: solid white;
+      border-width: 0 2px 2px 0; transform: rotate(45deg);
+      top: 50%; left: 50%; margin: -5px 0 0 -3px;
+    }
+
+    /* Severity */
+    .severity-scale { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .severity-option { cursor: pointer; }
+    .severity-badge {
+      display: block; padding: 14px 12px; background: var(--surface);
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      text-align: center; font-size: 14px; font-weight: 600; color: var(--text-b);
+    }
+    input[type="radio"]:checked + .severity-badge {
+      background: var(--blue-lt); border-color: var(--blue); color: var(--blue);
+    }
+
+    @media (min-width: 900px) {
+      .symptom-buttons { grid-template-columns: repeat(3,1fr); gap: 12px; }
+      .severity-scale  { gap: 12px; }
+    }
+
     /* Appointment-only helpers (small, token-aligned) */
     .appt-hero {
       background: linear-gradient(165deg, rgba(26,107,255,.12) 0%, rgba(26,107,255,.04) 60%, transparent 100%);
