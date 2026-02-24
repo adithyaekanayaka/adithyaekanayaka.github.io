@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Clinic Flow · Delivery Options</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* Specific enhancements for this flow */
+        .delivery-toggle {
+            display: flex;
+            background: #EDF2FF;
+            padding: 6px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .toggle-option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-option.active {
+            background: white;
+            color: var(--blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .address-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .address-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--blue-lt);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+        }
+
+        .address-info {
+            flex: 1;
+        }
+
+        .address-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-h);
+        }
+
+        .address-detail {
+            font-size: 13px;
+            color: var(--text-m);
+            margin-top: 2px;
+        }
+
+        .btn-change {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--blue);
+            cursor: pointer;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .option-card.active {
+            border-color: var(--blue);
+            background: #F0F6FF;
+        }
+
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-card.active .radio-circle {
+            border-color: var(--blue);
+        }
+
+        .option-card.active .radio-circle::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--blue);
+            border-radius: 50%;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-h);
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: var(--text-m);
+            margin-top: 2px;
+        }
+
+        .option-price {
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--blue);
+        }
+
+        .summary-card {
+            background: var(--text-h);
+            border-radius: 24px;
+            padding: 24px;
+            color: white;
+            margin-top: 12px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .summary-total {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        .checkout-footer {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 18px;
+            background: var(--blue);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(26, 107, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-continue:active {
+            transform: scale(0.97);
+        }
+
+        /* Adjustments for the project's screen system */
+        .screen-header {
+            background: var(--blue);
+            color: white;
+            padding-bottom: 24px;
+            border-radius: 0 0 32px 32px;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="screen" style="display: flex;">
+        <header class="screen-header with-back">
+            <a href="pharmacy.html" class="btn-back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </a>
+            <h1 class="header-title" style="color: white;">Delivery Options</h1>
+        </header>
+
+        <div class="screen-body">
+            <div class="delivery-toggle" style="margin-top: 12px;">
+                <div class="toggle-option active">Home Delivery</div>
+                <div class="toggle-option">Self Pickup</div>
+            </div>
+
+            <div class="section-label">Delivery Address</div>
+            <div class="address-card">
+                <div class="address-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="address-info">
+                    <div class="address-name">Home</div>
+                    <div class="address-detail">No. 45, Golden Street, Avenue Area, NY</div>
+                </div>
+                <div class="btn-change">Change</div>
+            </div>
+
+            <div class="section-label">Delivery Speed</div>
+            <div class="option-card active">
+                <div class="radio-circle"></div>
+                <div class="option-content">
+                    <div class="option-title">Standard Delivery</div>
+                    <div class="option-desc">Estimated delivery in 25-40 mins</div>
+                </div>
+                <div class="option-price">$1.50</div>
+            </div>
+
+            <div class="option-card">
+                <div class="radio-circle"></div>
+                <div class="option-content">
+                    <div class="option-title">Express Delivery</div>
+                    <div class="option-desc">Arrives within 15 mins</div>
+                </div>
+                <div class="option-price">$3.50</div>
+            </div>
+
+            <div class="section-label">Payment Summary</div>
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span>Items Subtotal</span>
+                    <span>$24.50</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span>$2.50</span>
+                </div>
+                <div class="summary-row">
+                    <span>Service Fee</span>
+                    <span>$0.50</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total Amount</span>
+                    <span>$27.50</span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="screen-footer" style="padding: 16px 20px;">
+            <button class="btn-continue" onclick="window.location.href='order-confirmation.html'">
+                Place Order
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        const toggleOptions = document.querySelectorAll('.toggle-option');
+        toggleOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                toggleOptions.forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+            });
+        });
+
+        const optionCards = document.querySelectorAll('.option-card');
+        optionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                optionCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

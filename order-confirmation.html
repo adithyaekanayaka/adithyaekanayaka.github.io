@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Clinic Flow · Order Confirmed</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .conf-header-alt {
+            padding: 40px 20px 30px;
+            text-align: center;
+            background: white;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #34C759 0%, #28A745 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin: 0 auto 20px;
+            box-shadow: 0 12px 28px rgba(52, 199, 89, 0.3);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(-20deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .conf-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-h);
+        }
+
+        .conf-subtitle {
+            color: var(--text-m);
+            margin-top: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .est-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .est-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-m);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .est-time {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--blue);
+            text-align: center;
+            margin: 8px 0;
+            display: block;
+            letter-spacing: -1px;
+        }
+
+        .est-status {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #34C759;
+            background: #E6F7ED;
+            padding: 6px 14px;
+            border-radius: 99px;
+            width: fit-content;
+            margin: 0 auto 20px;
+        }
+
+        .progress-container-alt {
+            height: 6px;
+            background: #F0F4FF;
+            border-radius: 3px;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .progress-bar-alt {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 65%;
+            background: var(--blue);
+            border-radius: 3px;
+        }
+
+        .tracking-steps-alt {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .step-alt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.3;
+        }
+
+        .step-alt.active {
+            opacity: 1;
+        }
+
+        .step-icon-alt {
+            width: 32px;
+            height: 32px;
+            background: #F0F4FF;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+        }
+
+        .step-alt.active .step-icon-alt {
+            background: var(--blue);
+            color: white;
+        }
+
+        .step-alt span {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .order-details-mini {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            color: var(--text-m);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .btn-home-alt {
+            width: 100%;
+            background: #F3F4F6;
+            color: var(--text-h);
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="screen" style="display: flex;">
+        <div class="conf-header-alt">
+            <div class="success-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h1 class="conf-title">Order Confirmed!</h1>
+            <p class="conf-subtitle">Order ID: #PH-92841</p>
+        </div>
+
+        <div class="screen-body">
+            <div class="est-card" style="margin-top: 10px;">
+                <div class="est-label">Estimated Delivery Time</div>
+                <span class="est-time" id="timer">25:00</span>
+                <div class="est-status">Out for Delivery</div>
+
+                <div class="progress-container-alt">
+                    <div class="progress-bar-alt"></div>
+                </div>
+
+                <div class="tracking-steps-alt">
+                    <div class="step-alt active">
+                        <div class="step-icon-alt">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <span>Placed</span>
+                    </div>
+                    <div class="step-alt active">
+                        <div class="step-icon-alt">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <span>Packed</span>
+                    </div>
+                    <div class="step-alt active">
+                        <div class="step-icon-alt">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="1" y="3" width="15" height="13"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                        </div>
+                        <span>On Way</span>
+                    </div>
+                    <div class="step-alt">
+                        <div class="step-icon-alt">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </div>
+                        <span>Home</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-details-mini">
+                <div class="detail-row">
+                    <span class="detail-label">Pharmacy</span>
+                    <span class="detail-value">Central Medicare</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Mode</span>
+                    <span class="detail-value">Credit Card (**** 4291)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Delivery Note</span>
+                    <span class="detail-value">Leave at door</span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="screen-footer">
+            <button class="btn-home-alt" onclick="window.location.href='dashboard.html'">Back to Home</button>
+        </footer>
+    </div>
+
+    <script>
+        let minutes = 25;
+        let seconds = 0;
+        const timerElement = document.getElementById('timer');
+
+        setInterval(() => {
+            if (seconds === 0) {
+                if (minutes === 0) return;
+                minutes--;
+                seconds = 59;
+            } else {
+                seconds--;
+            }
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+    </script>
+
+</body>
+
+</html>
