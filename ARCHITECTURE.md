@@ -88,7 +88,7 @@ graph TD
     Dash -.-> Late
     Late -.-> SwapLogic
     
-    Pharm --> Confirm --> Delivery
+    Pharm --> Delivery --> Confirm
     
     AdminD --> Queue & Break & StaffReports[reports.html]
     Break -.-> AutoResume

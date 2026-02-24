@@ -210,9 +210,9 @@ clinic-flow/
 ├── quick-assessment.html       # Post-booking quick assessment (NEW — V2.5)
 ├── clinical-tests.html         # Clinical test orders & pipeline tracker (NEW)
 ├── reports.html                # Completed test results & prescriptions
-├── pharmacy.html               # Pharmacy delivery browser
+├── pharmacy.html               # Pharmacy selector & browser
+├── order-delivery.html         # Delivery method selection (self-pickup or home delivery)
 ├── order-confirmation.html     # Order confirmation
-├── order-delivery.html         # Delivery tracking
 ├── directions.html             # Static clinic map
 ├── profile.html                # Patient profile & sign out
 ├── modal-late.html             # Running late modal
@@ -245,7 +245,7 @@ clinic-flow/
 - **Screen 2.1:** Running Late Modal (swap with next)
 - **Screen 2.2:** Arrival Check-In (honor system unlock)
 - **Screen 2.3:** Static Map (clinic location, embedded in Check In)
-- **Screen 2.4:** Pharmacy Delivery (home medicine delivery map)
+- **Screen 2.4:** Pharmacy Browser → Delivery Method Selection → Order Confirmation. Flow: `pharmacy.html` → `order-delivery.html` (self-pickup or home delivery) → `order-confirmation.html`.
 
 #### **Admin Dashboard (§5)**
 - **Screen 3.1:** Active Doctors & Triage Queue
