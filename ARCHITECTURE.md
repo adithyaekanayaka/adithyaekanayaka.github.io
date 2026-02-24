@@ -20,6 +20,7 @@ graph TD
         SPhone[phone-staff.html]:::completed
         POTP[otp-patient.html]:::completed
         SOTP[otp-staff.html]:::completed
+        ProfEdit[profile-edit.html<br/>Profile Setup + Next Step]:::completed
         
         Session[Session Token Logic]:::pending
         Bio[Biometric Shortcut]:::pending
@@ -66,7 +67,9 @@ graph TD
 
     %% Connections
     Splash --> Role
-    Role -->|Patient| PPhone --> POTP --> Diag
+    Role -->|Patient| PPhone --> POTP --> ProfEdit
+    ProfEdit -->|Book Appt| Diag
+    ProfEdit -->|Skip to Dashboard| Dash
     Role -->|Staff/Admin| SPhone --> SOTP --> AdminD
     
     Diag --> Dash
@@ -107,6 +110,7 @@ graph TD
 
 #### **Phase 1: Authentication & Entry**
 *   ✅ **Completed:** Full Splash-to-Dashboard flow for Patients, Staff, and Admins. Responsive OTP entry screens.
+*   ✅ **Completed (V2.9):** `profile-edit.html` — 2-step profile setup screen inserted after patient OTP verification. Step 1: personal info form (name, DOB→age auto-calc, gender chips, blood type, allergies, emergency contact). Step 2: "What's Next?" decision screen — patient chooses "Book an Appointment" (→ `diagnosis.html`) or "Go to Dashboard" (→ `dashboard.html`). Also reachable from `profile.html` Personal Info card.
 *   🚧 **Pending:** `localStorage` session handling to skip splash for returning users.
 
 #### **Phase 2: Patient Journey (The "Lazy Thumb" Core)**
@@ -134,6 +138,7 @@ graph TD
 | :--- | :--- | :--- |
 | **Splash & Role** | ✅ **Done** | Token check logic (simulated) + Role separation. |
 | **Auth (OTP/PIN)** | ✅ **Done** | 2-step phone binding for Patients; Credential binding for Staff. |
+| **Profile Setup** | ✅ **Done (V2.9)** | **"First Run":** Inserted after patient OTP. Collects name, DOB (age auto-calcs), gender, blood type, allergies, emergency contact. Step 2 asks: Book Appointment now → `diagnosis.html`, or Skip → `dashboard.html`. Reachable from `profile.html` Personal Info card for edits. |
 | **Triage (Diagnosis)** | ✅ **Done** | **"The System Decisions":** Specialist matching based on symptom selection. |
 | **Patient Dashboard** | ✅ **Done (V2.7)** | **"Lazy Thumb":** Tiles restructured — Check In · Book Appt (→ For Whom sheet) · Prescriptions · My Queue. Clinical Tests & Test Results retired as standalone tiles; now appointment-scoped. |
 | **Contextual Directions** | ✅ **Done (V2.4)** | **"Right Place":** Directions CTA added to `appointment.html` footer so wayfinding appears at the moment of booking, not on the dashboard. |
@@ -176,6 +181,9 @@ graph TD
 
 ### **Key Improvements Applied (V2.8)**
 16. **Multi-Select Prescription Fill (V2.8):** Active prescription cards in `prescriptions.html` are now individually selectable (tap to tick). A circular checkbox on each card fills blue on selection; the card border highlights. When ≥1 card is selected, a dark bulk action bar slides in above the footer showing "Ready to fill — X Prescriptions" with a single "Fill at Pharmacy →" CTA, routing the whole batch to `pharmacy.html` in one trip. A "Select All / Deselect All" toggle in the header header handles the common case of filling all active prescriptions at once. Individual "Fill at Pharmacy →" inline CTAs remain on each card as a single-item fast path (tap stops propagation so it bypasses the selection toggle). Filled and expired cards are not selectable.
+
+### **Key Improvements Applied (V2.9)**
+17. **Profile Setup on First Login (V2.9):** `profile-edit.html` inserted into the post-OTP flow for new patients. Step 1 collects personal details (name, DOB with auto-age-calc, gender chips, 8-way blood type selector, allergies, emergency contact). Step 2 — "What's Next?" — presents two clear paths: **Book an Appointment** (→ triage → doctor assignment) or **Go to Dashboard** (skip for now). This adheres to "Lazy Thumb": no data already linked to the phone number is re-asked. The same screen is reachable from `profile.html` → Personal Info for subsequent edits, eliminating the need for a separate edit page.
 
 ### **5. Next Steps for Development**
 *   **JavaScript Layer:** Implement session persistence and dynamic ticket updates.
