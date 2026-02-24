@@ -189,6 +189,37 @@
     }
     .appt-detail-item svg { flex-shrink: 0; color: var(--text-lt); }
 
+    /* ── Appointment action strip ── */
+    .appt-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .appt-action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    .appt-action-btn:active { opacity: .7; transform: scale(.98); }
+    .appt-action-btn--tests {
+      background: rgba(255,149,0,.10);
+      color: var(--orange);
+    }
+    .appt-action-btn--results {
+      background: rgba(52,199,89,.10);
+      color: var(--green);
+    }
+
     /* ── Tab bar ── */
     .tab-bar {
       flex-shrink: 0;
@@ -304,7 +335,7 @@
       <!-- ── Upcoming ── -->
       <p class="section-label">Upcoming</p>
 
-      <a class="appt-card" href="#">
+      <div class="appt-card">
         <div class="appt-card-top">
           <div class="appt-icon appt-icon--upcoming">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -317,9 +348,6 @@
             <div class="appt-specialty">General Practitioner</div>
           </div>
           <span class="appt-badge badge-upcoming">Upcoming</span>
-          <svg class="appt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
         <div class="appt-details">
           <div class="appt-detail-item">
@@ -335,12 +363,18 @@
             Room 204, Floor 2
           </div>
         </div>
-      </a>
+        <div class="appt-actions">
+          <a class="appt-action-btn appt-action-btn--tests" href="clinical-tests.html">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12"/><path d="M9 2v6.5L5.5 15a4 4 0 0 0 3.5 6h6a4 4 0 0 0 3.5-6L15 8.5V2"/><path d="M8 14h8"/></svg>
+            3 Active Tests
+          </a>
+        </div>
+      </div>
 
       <!-- ── Past ── -->
       <p class="section-label">Past</p>
 
-      <a class="appt-card" href="#">
+      <div class="appt-card">
         <div class="appt-card-top">
           <div class="appt-icon appt-icon--completed">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -354,9 +388,6 @@
             <div class="appt-specialty">Neurologist</div>
           </div>
           <span class="appt-badge badge-completed">Completed</span>
-          <svg class="appt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
         <div class="appt-details">
           <div class="appt-detail-item">
@@ -372,9 +403,19 @@
             Neurology, Floor 3
           </div>
         </div>
-      </a>
+        <div class="appt-actions">
+          <a class="appt-action-btn appt-action-btn--tests" href="clinical-tests.html">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12"/><path d="M9 2v6.5L5.5 15a4 4 0 0 0 3.5 6h6a4 4 0 0 0 3.5-6L15 8.5V2"/><path d="M8 14h8"/></svg>
+            Clinical Tests
+          </a>
+          <a class="appt-action-btn appt-action-btn--results" href="reports.html">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            Test Results
+          </a>
+        </div>
+      </div>
 
-      <a class="appt-card" href="#">
+      <div class="appt-card">
         <div class="appt-card-top">
           <div class="appt-icon appt-icon--completed">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -388,9 +429,6 @@
             <div class="appt-specialty">General Practitioner</div>
           </div>
           <span class="appt-badge badge-completed">Completed</span>
-          <svg class="appt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
         <div class="appt-details">
           <div class="appt-detail-item">
@@ -406,9 +444,15 @@
             Room 204, Floor 2
           </div>
         </div>
-      </a>
+        <div class="appt-actions">
+          <a class="appt-action-btn appt-action-btn--results" href="reports.html">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            Test Results
+          </a>
+        </div>
+      </div>
 
-      <a class="appt-card" href="#">
+      <div class="appt-card">
         <div class="appt-card-top">
           <div class="appt-icon appt-icon--cancelled">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -422,9 +466,6 @@
             <div class="appt-specialty">Dermatologist</div>
           </div>
           <span class="appt-badge badge-cancelled">Cancelled</span>
-          <svg class="appt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
         <div class="appt-details">
           <div class="appt-detail-item">
@@ -436,7 +477,7 @@
             11:00 AM
           </div>
         </div>
-      </a>
+      </div>
 
     </div>
 
