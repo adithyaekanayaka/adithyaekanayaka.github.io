@@ -4,52 +4,375 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Clinic Flow · Pharmacy Delivery</title>
+    <title>Clinic Flow · Pharmacy Selector</title>
+    <!-- Importing Inter for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
     <style>
-        .pharmacy-card {
+        :root {
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --blue-gradient: linear-gradient(135deg, #1A6BFF 0%, #0F4FCC 100%);
+            --glass: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: var(--font);
+            background: #F8FAFF;
+        }
+
+        .premium-header {
+            padding: 60px 20px 20px;
+            background: var(--blue-gradient);
+            color: white;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 10px 30px rgba(26, 107, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .header-top {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            background: var(--surface);
-            box-shadow: var(--shadow-sm);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .btn-back-ios {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-ios:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .header-info h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        .header-info p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 4px 0 0;
+        }
+
+        .search-container {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            background: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: var(--font);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 8px 24px rgba(26, 107, 255, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-m);
+        }
+
+        .filter-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 20px 0;
+            margin: 0 -20px;
+            padding-left: 20px;
+            scrollbar-width: none;
+        }
+
+        .filter-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            padding: 10px 20px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 99px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-b);
+            white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .pharmacy-card:active {
-            transform: scale(0.98);
+        .filter-chip.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+            box-shadow: 0 4px 12px rgba(26, 107, 255, 0.2);
+        }
+
+        .map-card {
+            background: white;
+            border-radius: 24px;
+            padding: 8px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-view {
+            height: 180px;
+            background: #E8F0FE;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRThGMEY2Ii8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMTAwIiByPSI1MCIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC41Ii8+PHBhdGggZD0iTTAgMTUwaDQwME0xNTAgMHYyMDBNMjUwIDB2MjAwIiBzdHJva2U9IiNEOUUzRjUiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==');
+            background-size: cover;
+        }
+
+        .map-pin {
+            width: 48px;
+            height: 48px;
+            background: var(--blue);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(26, 107, 255, 0.3);
+            border: 3px solid white;
+        }
+
+        .map-pin svg {
+            transform: rotate(45deg);
+            color: white;
+        }
+
+        .pharmacy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-bottom: 100px;
+        }
+
+        .premium-card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .premium-card:active {
+            transform: scale(0.97);
             border-color: var(--blue);
         }
 
-        .pharmacy-info {
+        .premium-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(26, 107, 255, 0.12);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .premium-card:hover::after {
+            opacity: 1;
+        }
+
+        .pharm-img {
+            width: 80px;
+            height: 80px;
+            background: var(--blue-lt);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+            flex-shrink: 0;
+        }
+
+        .pharm-details {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
-        .pharmacy-name {
-            font-weight: 800;
-            font-size: 16px;
+        .pharm-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .pharm-name {
+            font-size: 18px;
+            font-weight: 700;
             color: var(--text-h);
         }
 
-        .pharmacy-meta {
+        .pharm-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #FFF9EB;
+            color: #FFB800;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pharm-meta-premium {
             font-size: 13px;
             color: var(--text-m);
             display: flex;
-            gap: 8px;
             align-items: center;
+            gap: 12px;
+            margin-top: 4px;
         }
 
-        .delivery-price {
+        .pharm-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pharm-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            font-size: 11px;
             font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-blue {
+            background: #E6F0FF;
+            color: #1A6BFF;
+        }
+
+        .tag-green {
+            background: #E6F7ED;
+            color: #34C759;
+        }
+
+        .price-swipe {
+            margin-left: auto;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .price-value {
+            font-size: 18px;
+            font-weight: 800;
             color: var(--blue);
+        }
+
+        .price-label {
+            font-size: 11px;
+            color: var(--text-lt);
+            font-weight: 600;
+        }
+
+        /* Bottom Action Bar */
+        .bottom-action {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: var(--text-h);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            animation: slideUp 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .action-button {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 700;
             font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-button:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
@@ -57,123 +380,231 @@
 <body>
 
     <div class="screen" id="screen-pharmacy" style="display: flex;">
-        <div class="screen-header with-back">
-            <a href="dashboard.html" class="btn-back">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 18l-6-6 6-6" />
-                </svg>
-            </a>
-            <div>
-                <p class="header-step">Medicine Delivery</p>
-                <h3 class="header-title">Select Pharmacy</h3>
+        <header class="premium-header">
+            <div class="header-top">
+                <a href="dashboard.html" class="btn-back-ios">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <div class="header-info">
+                    <h1>Select Pharmacy</h1>
+                    <p>32 pharmacies available nearby</p>
+                </div>
             </div>
-        </div>
+
+            <div class="search-container">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search pharmacy or medicine...">
+            </div>
+        </header>
 
         <div class="screen-body">
-            <div class="section-label">Delivery Map</div>
-            <div class="card" style="margin-bottom: 20px; padding: 0; overflow: hidden;">
-                <div class="static-map" style="margin: 0; height: 180px; border-radius: 0;">
-                    <div class="map-placeholder">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M12 21s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 7.2c0 7.3-8 11.8-8 11.8z" />
-                            <circle cx="12" cy="9" r="3" />
-                        </svg>
-                        <span style="margin-top: 10px;">Finding nearby pharmacies...</span>
+            <div class="filter-scroll">
+                <div class="filter-chip active">All Pharmacies</div>
+                <div class="filter-chip">Open Now</div>
+                <div class="filter-chip">Nearby ( < 1km)</div>
+                        <div class="filter-chip">24/7 Service</div>
+                        <div class="filter-chip">Best Rated</div>
+                </div>
+
+                <div class="section-label">Nearby Locations</div>
+                <div class="map-card">
+                    <div class="map-view">
+                        <div class="map-pin">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label">Available Options</div>
+
+                <div class="pharmacy-list">
+                    <!-- Pharmacy 1 -->
+                    <div class="premium-card">
+                        <div class="pharm-img">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </div>
+                        <div class="pharm-details">
+                            <div class="pharm-title-row">
+                                <span class="pharm-name">Central Medicare</span>
+                                <div class="pharm-rating">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                    4.9
+                                </div>
+                            </div>
+                            <div class="pharm-meta-premium">
+                                <div class="pharm-meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    12 mins
+                                </div>
+                                <div class="pharm-meta-item">• 0.8 km</div>
+                            </div>
+                            <div class="pharm-tags">
+                                <span class="tag tag-blue">Express</span>
+                                <span class="tag tag-green">Open 24/7</span>
+                            </div>
+                        </div>
+                        <div class="price-swipe">
+                            <span class="price-value">$2.50</span>
+                            <span class="price-label">Delivery</span>
+                        </div>
+                    </div>
+
+                    <!-- Pharmacy 2 -->
+                    <div class="premium-card">
+                        <div class="pharm-img" style="background: #FFF0F0; color: #FF3B30;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <div class="pharm-details">
+                            <div class="pharm-title-row">
+                                <span class="pharm-name">Rapid Health RX</span>
+                                <div class="pharm-rating">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                    4.7
+                                </div>
+                            </div>
+                            <div class="pharm-meta-premium">
+                                <div class="pharm-meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    25 mins
+                                </div>
+                                <div class="pharm-meta-item">• 1.5 km</div>
+                            </div>
+                            <div class="pharm-tags">
+                                <span class="tag tag-blue">Premium</span>
+                            </div>
+                        </div>
+                        <div class="price-swipe">
+                            <span class="price-value">FREE</span>
+                            <span class="price-label">Delivery</span>
+                        </div>
+                    </div>
+
+                    <!-- Pharmacy 3 -->
+                    <div class="premium-card">
+                        <div class="pharm-img" style="background: #F0F0FF; color: #7B61FF;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div class="pharm-details">
+                            <div class="pharm-title-row">
+                                <span class="pharm-name">LifeCare Plus</span>
+                                <div class="pharm-rating">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                    4.8
+                                </div>
+                            </div>
+                            <div class="pharm-meta-premium">
+                                <div class="pharm-meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    18 mins
+                                </div>
+                                <div class="pharm-meta-item">• 2.1 km</div>
+                            </div>
+                            <div class="pharm-tags">
+                                <span class="tag tag-green">Verified</span>
+                            </div>
+                        </div>
+                        <div class="price-swipe">
+                            <span class="price-value">$1.00</span>
+                            <span class="price-label">Delivery</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="section-label">Available Options</div>
-
-            <div class="pharmacy-card">
-                <div class="pharmacy-info">
-                    <span class="pharmacy-name">CityMed Pharmacy</span>
-                    <span class="pharmacy-meta">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 21s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 7.2c0 7.3-8 11.8-8 11.8z" />
-                        </svg>
-                        1.2 km away • 15 mins
-                    </span>
+            <div class="bottom-action">
+                <div class="selected-count">
+                    <span style="display: block; font-size: 13px; opacity: 0.7;">Selected</span>
+                    <span style="font-weight: 700; font-size: 16px;">Central Medicare</span>
                 </div>
-                <div class="delivery-price">$4.50</div>
+                <button class="action-button">Continue ( $2.50 )</button>
             </div>
 
-            <div class="pharmacy-card">
-                <div class="pharmacy-info">
-                    <span class="pharmacy-name">HealthPlus Care</span>
-                    <span class="pharmacy-meta">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 21s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 7.2c0 7.3-8 11.8-8 11.8z" />
-                        </svg>
-                        2.5 km away • 30 mins
-                    </span>
-                </div>
-                <div class="delivery-price">$3.00</div>
-            </div>
-
-            <div class="pharmacy-card">
-                <div class="pharmacy-info">
-                    <span class="pharmacy-name">Express Drugs</span>
-                    <span class="pharmacy-meta">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 21s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 7.2c0 7.3-8 11.8-8 11.8z" />
-                        </svg>
-                        3.8 km away • 45 mins
-                    </span>
-                </div>
-                <div class="delivery-price">Free</div>
-            </div>
-
-            <p class="diagnosis-hint" style="margin-top:16px;">* Delivery prices vary based on distance and priority.
-            </p>
-
+            <!-- Tab Bar integration -->
+            <nav class="tab-bar">
+                <a href="dashboard.html" class="tab">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="appointment.html" class="tab">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" viewBox="0 0 24 24" width="24" height="24">
+                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                        <line x1="16" x2="16" y1="2" y2="6"></line>
+                        <line x1="8" x2="8" y1="2" y2="6"></line>
+                        <line x1="3" x2="21" y1="10" y2="10"></line>
+                    </svg>
+                    <span>Appts</span>
+                </a>
+                <a href="pharmacy.html" class="tab active">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        <path d="M10 9h6" />
+                        <path d="M13 6v6" />
+                    </svg>
+                    <span>Pharmacy</span>
+                </a>
+                <a href="profile.html" class="tab">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Profile</span>
+                </a>
+            </nav>
         </div>
-
-        <!-- Tab Bar -->
-        <nav class="tab-bar">
-            <a href="dashboard.html" class="tab">
-                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    viewBox="0 0 24 24" width="24" height="24">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span>Home</span>
-            </a>
-            <a href="appointment.html" class="tab">
-                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    viewBox="0 0 24 24" width="24" height="24">
-                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                    <line x1="16" x2="16" y1="2" y2="6"></line>
-                    <line x1="8" x2="8" y1="2" y2="6"></line>
-                    <line x1="3" x2="21" y1="10" y2="10"></line>
-                </svg>
-                <span>Appts</span>
-            </a>
-            <a href="pharmacy.html" class="tab active">
-                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                    <path d="M10 9h6" />
-                    <path d="M13 6v6" />
-                </svg>
-                <span>Pharmacy</span>
-            </a>
-            <a href="profile.html" class="tab">
-                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <span>Profile</span>
-            </a>
-        </nav>
-    </div>
 
 </body>
 
