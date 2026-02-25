@@ -200,7 +200,8 @@ clinic-flow/
 ├── phone-admin.html            # Admin phone entry
 ├── otp-patient.html            # Patient OTP verification
 ├── otp-staff.html              # Staff OTP verification
-├── profile-edit.html           # Profile setup (post-OTP, first-run) + "Book or Skip" decision (NEW — V2.9)
+├── profile-edit.html           # Profile setup form — name, DOB, gender, blood type, allergies, emergency contact (NEW — V2.9)
+├── whats-next.html             # Post-profile decision screen — Book Appointment or Go to Dashboard (NEW — V2.9)
 ├── diagnosis.html              # Quick triage assessment
 ├── dashboard.html              # Patient dashboard
 ├── checkin.html                # Arrival check-in
@@ -231,7 +232,8 @@ clinic-flow/
 - **Screen 0.2:** Role Selection (Patient, Staff, Admin)
 - **Screen 0.3:** Phone Binding & OTP Verification
   - Patient path (2-step flow)
-- **Screen 0.4:** Profile Setup & Next-Step Decision (`profile-edit.html` — **V2.9 NEW**) — 2-step screen after patient OTP. Step 1: personal info (name, DOB→auto-age, gender chips, blood type, allergies, emergency contact). Step 2: "Book an Appointment" (→ `diagnosis.html`) or "Go to Dashboard" (→ `dashboard.html`). Reachable from `profile.html` Personal Info card.
+- **Screen 0.4a:** Profile Setup (`profile-edit.html` — **V2.9 NEW**) — personal info form (name, DOB→auto-age, gender chips, blood type, allergies, emergency contact). "Save & Continue" navigates to `whats-next.html`. Reachable from `profile.html` Personal Info card for edits.
+- **Screen 0.4b:** What's Next? (`whats-next.html` — **V2.9 NEW**) — standalone decision screen at its own URL. Two options: **Book an Appointment** (→ `diagnosis.html`) or **Go to Dashboard** (→ `dashboard.html`). Back → `profile-edit.html`.
   - Staff path (credential binding)
   - Admin path (PIN entry)
 
